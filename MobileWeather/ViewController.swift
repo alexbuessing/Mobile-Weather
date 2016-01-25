@@ -27,6 +27,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var locationStack: UIStackView!
     @IBOutlet var containerView: UIView!
     @IBOutlet var currentTemp: UILabel!
+    @IBOutlet var bgImage: UIImageView!
     
     @IBOutlet var contentView: UIView!
     
@@ -122,13 +123,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func updateUI() {
-            
-            currentTemp.text = "\(weather.currentTemp)º"
-            todayLow.text = "\(weather.tempMin)º"
-            todayHigh.text = "\(weather.tempMax)º"
-            humidity.text = "\(weather.humidity)%"
-            windSpeed.text = "\(weather.windSpeed)MPH"
-            mainImg.image = UIImage(named: "\(weather.getImageNumber(weather.todayIcon))")
+        
+        weather.getImage(weather.todayIcon)
+        bgImage.image = weather.bgImg
+        currentTemp.text = "\(weather.currentTemp)º"
+        todayLow.text = "\(weather.tempMin)º"
+        todayHigh.text = "\(weather.tempMax)º"
+        humidity.text = "\(weather.humidity)%"
+        windSpeed.text = "\(weather.windSpeed)MPH"
+        mainImg.image = UIImage(named: "\(weather.getImageNumber(weather.todayIcon))")
     
     }
     

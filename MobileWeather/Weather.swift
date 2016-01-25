@@ -27,6 +27,16 @@ class Weather {
     private var _hourlyArray: Array<String>!
     private var _iconArray: Array<String>!
     private var _todayIcon: String!
+    private var _bgImg: UIImage!
+    
+    var bgImg: UIImage {
+        if _bgImg == nil {
+            _bgImg = UIImage(named: "1")
+        }
+        return _bgImg
+    }
+    
+    var timer = NSTimer()
     
     var weatherURL: String {
         get {
@@ -148,16 +158,17 @@ class Weather {
         
     }
     
-    
     func getImageNumber(condition: String) -> Int {
         
         switch condition {
             case "snow":
             return 9
             case "cloudy":
-            return 7
+            return 14
             case "partly-cloudy-night":
             return 8
+            case "partly-cloudy-day":
+            return 7
             case "clear-day":
             return 1
             case "clear-night":
@@ -170,8 +181,6 @@ class Weather {
             return 10
             case "fog":
             return 5
-            case "partly-cloudy-night":
-            return 4
         default:
             return 1
         
@@ -179,6 +188,155 @@ class Weather {
         
     }
     
+    func getTimeAndDay() -> String {
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .FullStyle
+        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(" ")
+        let day = dayArr[0].stringByReplacingOccurrencesOfString(",", withString: "")
+        let date2 = NSDate()
+        let formatter2 = NSDateFormatter()
+        formatter2.timeStyle = .FullStyle
+        var fullTime = String(formatter2.stringFromDate(date2)).componentsSeparatedByString(" ")
+        let morningAfternoon = fullTime[1]
+        let time = String(fullTime[0].characters.dropLast(3))
+        return "\(time) \(morningAfternoon) \(day)"
+    }
+    
+    func parseTime(time: String) -> Array<String> {
+        
+        var arrayContainer = time.componentsSeparatedByString(":")
+        arrayContainer.append(arrayContainer[1].componentsSeparatedByString(" ")[0])
+        let testArray = time.componentsSeparatedByString(" ")
+        arrayContainer.removeAtIndex(1)
+        arrayContainer.append(testArray[1])
+        
+        return arrayContainer
+    }
+    
+    func isDaytime() -> Bool {
+        
+        let str = getTimeAndDay()
+        var strArr = str.componentsSeparatedByString(" ")
+        var currentTime = strArr[0].componentsSeparatedByString(":")
+        currentTime.append(strArr[1])
+        
+        var sunriseArr = parseTime(_sunrise)
+        var sunsetArr = parseTime(_sunset)
+        
+        if Int(currentTime[0])! == 12 && currentTime[2] == "PM" {
+            return true
+        } else if Int(currentTime[0])! == 12 && currentTime[2] == "AM" {
+            
+            return false
+            
+        } else if (Int(currentTime[0])! >= Int(sunriseArr[0])! && currentTime[2] == sunriseArr[2]) {
+            
+            if (Int(currentTime[0])! == Int(sunriseArr[0])!) {
+                
+                if Int(currentTime[1])! > Int(sunriseArr[1])! {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } else if (Int(currentTime[0])! <= Int(sunsetArr[0])! && currentTime[2] == sunsetArr[2]) {
+            
+            if (Int(currentTime[0])! == Int(sunsetArr[0])!) {
+                
+                if Int(currentTime[1])! < Int(sunsetArr[1])! {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+    
+    func getImage(condition: String) {
+        
+        var image1: UIImage!
+        
+        switch condition {
+        case "thunderstorm":
+            if isDaytime() == true {
+                image1 = UIImage(named: "thunderstormbg.jpg")
+            } else {
+                image1 = UIImage(named: "thunderstormnightbg.jpg")
+            }
+        case "rain":
+            if isDaytime() == true {
+                image1 = UIImage(named: "rainbg.jpg")
+            } else {
+                image1 = UIImage(named: "nightrainbg.jpg")
+            }
+        case "snow":
+            if isDaytime() == true {
+                image1 = UIImage(named: "snowbg.jpg")
+            } else {
+                image1 = UIImage(named: "snowbg.jpg")
+            }
+        case "sleet":
+            if isDaytime() == true {
+                image1 = UIImage(named: "snowbg.jpg")
+            } else {
+                image1 = UIImage(named: "snowbg.jpg")
+            }
+        case "fog":
+            if isDaytime() == true {
+                image1 = UIImage(named: "hazebg.jpg")
+            } else {
+                image1 = UIImage(named: "hazenightbg.jpg")
+            }
+        case "clear-day":
+            if isDaytime() == true {
+                image1 = UIImage(named: "sunbg.jpg")
+            } else {
+                image1 = UIImage(named: "clearnightbg.jpg")
+            }
+        case "clear-night":
+            if isDaytime() == true {
+                image1 = UIImage(named: "sunbg.jpg")
+            } else {
+                image1 = UIImage(named: "clearnightbg.jpg")
+            }
+        case "cloudy":
+            if isDaytime() == true {
+                image1 = UIImage(named: "cloudybg.jpg")
+            } else {
+                image1 = UIImage(named: "cloudynightbg.jpg")
+            }
+        case "partly-cloudy-day":
+            if isDaytime() == true {
+                image1 = UIImage(named: "cloudybg.jpg")
+            } else {
+                image1 = UIImage(named: "cloudynightbg.jpg")
+            }
+        case "partly-cloudy-night":
+            if isDaytime() == true {
+                image1 = UIImage(named: "cloudybg.jpg")
+            } else {
+                image1 = UIImage(named: "cloudynightbg.jpg")
+            }
+        case "wind":
+            image1 = UIImage(named: "windybg.jpg")
+        default:
+            if isDaytime() == true {
+                image1 = UIImage(named: "sunbg.jpg")
+            } else {
+                image1 = UIImage(named: "clearnightbg.jpg")
+            }
+        }
+        
+        _bgImg = image1
+        
+    }
     
     func kelvinToFarenheit(kelvin: String) -> String {
         

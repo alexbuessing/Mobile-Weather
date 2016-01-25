@@ -6,8 +6,14 @@
 //  Copyright © 2016 Buessing. All rights reserved.
 //
 
-import Cocoa
+import UIKit
 
 class HeaderDetailView: UIView {
 
+    override func awakeFromNib() {
+        
+        layer.backgroundColor = UIColor(red: 59.0 / 255.0, green: 147.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.5).CGColor
+        
+    }
+    
 }

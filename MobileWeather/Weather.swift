@@ -29,14 +29,14 @@ class Weather {
     private var _todayIcon: String!
     private var _bgImg: UIImage!
     
+    var timer = NSTimer()
+    
     var bgImg: UIImage {
         if _bgImg == nil {
             _bgImg = UIImage(named: "1")
         }
         return _bgImg
     }
-    
-    var timer = NSTimer()
     
     var weatherURL: String {
         get {
@@ -185,6 +185,11 @@ class Weather {
             return 1
         
         }
+    }
+    
+    func startTime() {
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getTimeAndDay", userInfo: nil, repeats: true)
         
     }
     
@@ -402,6 +407,14 @@ class Weather {
                         self._todayIcon = icon
                     }
                     
+                    if let humid = current["humidity"] as? Double {
+                        self._humidity = NSString(format: "%0.f", humid) as String
+                    }
+                    
+                    if let winds = current["windSpeed"] as? Double {
+                        self._windSpeed = NSString(format: "%.0f", winds) as String
+                    }
+                    
                 }
                 
                 if let today = dict["daily"] as? Dictionary<String, AnyObject> {
@@ -416,14 +429,6 @@ class Weather {
                         
                         if let tempsMax = data[0]["temperatureMax"] as? Double {
                             self._tempMax = NSString(format: "%.0f", tempsMax) as String
-                        }
-                        
-                        if let humid = data[0]["humidity"] as? Double {
-                            self._humidity = NSString(format: "%.0f", humid) as String
-                        }
-                        
-                        if let winds = data[0]["windSpeed"] as? Double {
-                            self._windSpeed = NSString(format: "%.0f", winds) as String
                         }
                         
                         if let sunriseTime = data[0]["sunriseTime"] as? Double {

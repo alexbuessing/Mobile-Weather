@@ -28,6 +28,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var containerView: UIView!
     @IBOutlet var currentTemp: UILabel!
     @IBOutlet var bgImage: UIImageView!
+    @IBOutlet var scrollContainerView: UIView!
     
     @IBOutlet var contentView: UIView!
     
@@ -39,15 +40,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        
+
     }
     
     override func viewDidAppear(animated: Bool) {
-          startTime()
+        startTime()
     }
     
     @IBAction func refreshBtnPressed(sender: AnyObject) {
@@ -85,11 +86,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             weather.longitude = locationManager.location!.coordinate.longitude
             reverseGeocoding(weather.latitude, longitude: weather.longitude)
             changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
+            locationManager.stopUpdatingLocation()
             waitForDownload()
         } else {
-            print("Phone does not have users location.")
+            print("Please search a location that you are interested in.")
         }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
+        let location = locations.last! as CLLocation
+
+        weather.latitude = location.coordinate.latitude
+        weather.longitude = location.coordinate.longitude
     }
     
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -143,7 +152,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.hideLoadingHUD()
             self.showHide(false)
         }
-        getTimeAndDay()
+        getDate()
     }
     
     @IBAction func mainImgTap(gesture: UIGestureRecognizer) {
@@ -160,24 +169,44 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func startTime() {
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getTimeAndDay", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getDate", userInfo: nil, repeats: true)
         
     }
     
-    func getTimeAndDay() {
+    func getDate() {
         let date = NSDate()
         let formatter = NSDateFormatter()
         formatter.dateStyle = .FullStyle
-        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(" ")
-        let day = dayArr[0].stringByReplacingOccurrencesOfString(",", withString: "")
-        let date2 = NSDate()
-        let formatter2 = NSDateFormatter()
-        formatter2.timeStyle = .FullStyle
-        var fullTime = String(formatter2.stringFromDate(date2)).componentsSeparatedByString(" ")
-        let morningAfternoon = fullTime[1]
-        let time = String(fullTime[0].characters.dropLast(3))
-        timeDay.text = "\(time) \(morningAfternoon) \(day)"
+        formatter.stringFromDate(date)
+        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(",")
+        let daynumberArr = dayArr[1].componentsSeparatedByString(" ")
+        let dayNumber = Int(daynumberArr[2])!
+        var ending = ""
+    
+        switch dayNumber {
+        case 1:
+            ending = "st"
+        case 2:
+            ending = "nd"
+        case 3:
+            ending = "rd"
+        case 4...20:
+            ending = "th"
+        case 21:
+            ending = "st"
+        case 22:
+            ending = "nd"
+        case 23:
+            ending = "rd"
+        case 24...30:
+            ending = "th"
+        case 31:
+            ending = "st"
+        default:
+            ending = ""
+        }
         
+        timeDay.text = "\(dayArr[0]), \(dayArr[1])\(ending)"
     }
     
     func showHide(showHide: Bool) {

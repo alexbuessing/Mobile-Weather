@@ -187,6 +187,21 @@ class Weather {
         }
     }
     
+    func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees, label: UILabel) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) in
+            if error != nil {
+                print(error)
+                return
+            }
+            else if placemarks?.count > 0 {
+                let pm = placemarks![0]
+                label.text = "\(pm.subAdministrativeArea!), \(pm.administrativeArea!)"
+            }
+        })
+        
+    }
+    
     func startTime() {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getTimeAndDay", userInfo: nil, repeats: true)

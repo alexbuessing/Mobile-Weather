@@ -15,5 +15,3 @@ let HEIGHT: CGFloat = 50
 let LBL_HEIGHT: CGFloat = 20
 
 typealias DownloadComplete = () -> ()
-
-//https://api.forecast.io/forecast/95daaab03d5219f345c111f7cbc9c693/43.2065,-71.5365

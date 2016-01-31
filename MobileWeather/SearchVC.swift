@@ -19,7 +19,6 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     var isLocation: Bool = true
     
     var weather: Weather!
-    //var location: Location!
     
     let defaults = NSUserDefaults.standardUserDefaults()
     
@@ -155,18 +154,14 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-//        let location: Location = Location(location: locationArray[indexPath.row], latitude: coordinateArray[indexPath.row][0], longitude: coordinateArray[indexPath.row][1])
 
         let location = Location()
         location.locationName = locationArray[indexPath.row]
         location.latitude = coordinateArray[indexPath.row][0]
         location.longitude = coordinateArray[indexPath.row][1]
-        
         location.useSearchLocation = true
         
         performSegueWithIdentifier("weatherSegue", sender: location)
-        
         
     }
     
@@ -177,9 +172,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 if let place = sender as? Location {
                     weatherVC.userLocation = place
                 }
-                
             }
-            
         }
     }
     

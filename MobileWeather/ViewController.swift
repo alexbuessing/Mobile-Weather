@@ -28,15 +28,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var containerView: UIView!
     @IBOutlet var currentTemp: UILabel!
     @IBOutlet var bgImage: UIImageView!
-    @IBOutlet var scrollContainerView: UIView!
-    
+    @IBOutlet var locationButton: UIButton!
     @IBOutlet var contentView: UIView!
+    @IBOutlet var sunrise: UILabel!
+    @IBOutlet var sunset: UILabel!
     
     var weather = Weather(latitude: 35.996948, longitude: -78.899023)
     var timer: NSTimer!
     var isMainImgShowing = true
     var locationManager = CLLocationManager()
     var userLocation = Location()
+    var useCurrentLocation = true
+    var loading = false
     
     
     
@@ -44,15 +47,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        if userLocation.useSearchLocation == true {
+            locationButton.alpha = 0.5
+            useCurrentLocation = false
+        }
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-
+        if userLocation.useSearchLocation == false {
+            locationManager.startUpdatingLocation()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
+
         startTime()
+    }
+    
+    @IBAction func currentLocationPressed(sender: AnyObject) {
+        
+        if useCurrentLocation {
+            locationButton.alpha = 0.5
+            useCurrentLocation = false
+        } else {
+            showLoadingHUD()
+            locationManager.startUpdatingLocation()
+            locationButton.alpha = 1.0
+            useCurrentLocation = true
+        }
+        
     }
     
     
@@ -60,13 +83,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //Updating weather information
     @IBAction func refreshBtnPressed(sender: AnyObject) {
         
-        
-        locationManager.startUpdatingLocation()
-        weather.reverseGeocoding(weather.latitude, longitude: weather.longitude, label: location)
-        changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
-        waitForDownload()
-        locationManager.stopUpdatingLocation()
-        
+        if useCurrentLocation {
+            showLoadingHUD()
+            locationManager.startUpdatingLocation()
+        } else {
+            waitForDownload()
+        }
     }
     
     func updateUI() {
@@ -79,6 +101,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         humidity.text = "\(weather.humidity)%"
         windSpeed.text = "\(weather.windSpeed)MPH"
         mainImg.image = UIImage(named: "\(weather.getImageNumber(weather.todayIcon))")
+        sunrise.text = weather.sunrise
+        sunset.text = weather.sunset
         
     }
     
@@ -104,7 +128,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //Location methods to get user coordinates
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
-        if userLocation.useSearchLocation == false {
+        if userLocation.useSearchLocation == false && useCurrentLocation == true {
             if status == .AuthorizedWhenInUse {
                 locationManager.startUpdatingLocation()
                 weather.latitude = locationManager.location!.coordinate.latitude
@@ -127,10 +151,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let location = locations.last! as CLLocation
-        weather.latitude = location.coordinate.latitude
-        weather.longitude = location.coordinate.longitude
+        let locations = locations.last! as CLLocation
+        weather.latitude = locations.coordinate.latitude
+        weather.longitude = locations.coordinate.longitude
+        weather.reverseGeocoding(weather.latitude, longitude: weather.longitude, label: location)
+        changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
+        waitForDownload()
+        locationManager.stopUpdatingLocation()
     }
     
 
@@ -246,7 +273,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.scrollView.contentSize = CGSizeMake(WIDTH * 24, (HEIGHT + 2 * LBL_HEIGHT))
         
     }
-
+    
     
     
     //Go to Search ViewController to add locations
@@ -260,10 +287,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     private func showLoadingHUD() {
         let hud = MBProgressHUD.showHUDAddedTo(contentView, animated: true)
         hud.labelText = "Loading..."
+        loading = true
     }
     
     private func hideLoadingHUD() {
         MBProgressHUD.hideAllHUDsForView(contentView, animated: true)
+        loading = false
     }
     
 }

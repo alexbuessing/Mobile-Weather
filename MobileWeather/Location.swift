@@ -61,14 +61,6 @@ class Location {
 
     init(){}
     
-//    init(location: String, latitude: Double, longitude: Double) {
-//        
-//        self._locationName = location
-//        self._latitude = latitude
-//        self._longitude = longitude
-//        
-//    }
-    
 }
 
 

@@ -160,26 +160,28 @@ class Weather {
     
     func getImageNumber(condition: String) -> Int {
         
-        switch condition {
-            case "snow":
+        switch (condition, isDaytime()) {
+        case ("snow", _):
             return 9
-            case "cloudy":
+        case ("cloudy", false):
+            return 15
+        case ("cloudy", true):
             return 14
-            case "partly-cloudy-night":
+        case ("partly-cloudy-night", _):
             return 8
-            case "partly-cloudy-day":
+        case ("partly-cloudy-day", _):
             return 7
-            case "clear-day":
+        case ("clear-day", _):
             return 1
-            case "clear-night":
+        case ("clear-night", _):
             return 2
-            case "rain":
+        case ("rain", _):
             return 3
-            case "sleet":
+        case ("sleet", _):
             return 13
-            case "wind":
+        case ("wind", _):
             return 10
-            case "fog":
+        case ("fog", _):
             return 5
         default:
             return 1
@@ -296,13 +298,7 @@ class Weather {
             } else {
                 image1 = UIImage(named: "nightrainbg.jpg")
             }
-        case "snow":
-            if isDaytime() == true {
-                image1 = UIImage(named: "snowbg.jpg")
-            } else {
-                image1 = UIImage(named: "snowbg.jpg")
-            }
-        case "sleet":
+        case "snow", "sleet":
             if isDaytime() == true {
                 image1 = UIImage(named: "snowbg.jpg")
             } else {
@@ -314,31 +310,13 @@ class Weather {
             } else {
                 image1 = UIImage(named: "hazenightbg.jpg")
             }
-        case "clear-day":
+        case "clear-day", "clear-night":
             if isDaytime() == true {
                 image1 = UIImage(named: "sunbg.jpg")
             } else {
                 image1 = UIImage(named: "clearnightbg.jpg")
             }
-        case "clear-night":
-            if isDaytime() == true {
-                image1 = UIImage(named: "sunbg.jpg")
-            } else {
-                image1 = UIImage(named: "clearnightbg.jpg")
-            }
-        case "cloudy":
-            if isDaytime() == true {
-                image1 = UIImage(named: "cloudybg.jpg")
-            } else {
-                image1 = UIImage(named: "cloudynightbg.jpg")
-            }
-        case "partly-cloudy-day":
-            if isDaytime() == true {
-                image1 = UIImage(named: "partlyCloudybg.jpg")
-            } else {
-                image1 = UIImage(named: "cloudynightbg.jpg")
-            }
-        case "partly-cloudy-night":
+        case "partly-cloudy-day", "partly-cloudy-night", "cloudy":
             if isDaytime() == true {
                 image1 = UIImage(named: "partlyCloudybg.jpg")
             } else {

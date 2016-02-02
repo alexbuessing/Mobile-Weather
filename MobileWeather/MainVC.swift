@@ -69,11 +69,13 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         if useCurrentLocation {
             locationButton.alpha = 0.5
             useCurrentLocation = false
-        } else {
+        } else if checkAuthStatus() {
             showLoadingHUD()
             locationManager.startUpdatingLocation()
             locationButton.alpha = 1.0
             useCurrentLocation = true
+        } else {
+            notification("Location Services Off", message: "Please change location preferences in the settings of your device.")
         }
         
     }
@@ -129,37 +131,50 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
         if userLocation.useSearchLocation == false && useCurrentLocation == true {
-            if status == .AuthorizedWhenInUse {
+            
+            switch status {
+            case .NotDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            case .AuthorizedWhenInUse:
                 locationManager.startUpdatingLocation()
-                weather.latitude = locationManager.location!.coordinate.latitude
-                weather.longitude = locationManager.location!.coordinate.longitude
-                weather.reverseGeocoding(weather.latitude, longitude: weather.longitude, label: location)
-                changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
-                locationManager.stopUpdatingLocation()
-                waitForDownload()
-            } else {
-                print("Please search a location that you are interested in.")
+                weather.reverseGeocoding(locationManager.location!.coordinate.latitude, longitude: locationManager.location!.coordinate.longitude, label: location)
+                setGetValues(locationManager.location!.coordinate.latitude, longitude: locationManager.location!.coordinate.longitude)
+            case .Denied:
+                notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
+                locationButton.alpha = 0.5
+                useCurrentLocation = false
+            default:
+                break
             }
+            
         } else {
             userLocation.useSearchLocation = false
             location.text! = userLocation.locationName
-            weather.latitude = userLocation.latitude
-            weather.longitude = userLocation.longitude
-            changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
-            waitForDownload()
+            setGetValues(userLocation.latitude, longitude: userLocation.longitude)
         }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locations = locations.last! as CLLocation
-        weather.latitude = locations.coordinate.latitude
-        weather.longitude = locations.coordinate.longitude
         weather.reverseGeocoding(weather.latitude, longitude: weather.longitude, label: location)
+        setGetValues(locations.coordinate.latitude, longitude: locations.coordinate.longitude)
+    }
+    
+    func setGetValues(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        weather.latitude = latitude
+        weather.longitude = longitude
         changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
         waitForDownload()
         locationManager.stopUpdatingLocation()
     }
     
+    func checkAuthStatus() -> Bool {
+        
+        if CLLocationManager.authorizationStatus() != .AuthorizedWhenInUse {
+            return false
+        }
+        return true
+    }
 
     
     //Flips the main image view with the details view
@@ -195,24 +210,14 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         var ending = ""
     
         switch dayNumber {
-        case 1:
+        case 1, 21, 31:
             ending = "st"
-        case 2:
+        case 2, 22:
             ending = "nd"
-        case 3:
+        case 3, 23:
             ending = "rd"
-        case 4...20:
+        case 4...20, 24...30:
             ending = "th"
-        case 21:
-            ending = "st"
-        case 22:
-            ending = "nd"
-        case 23:
-            ending = "rd"
-        case 24...30:
-            ending = "th"
-        case 31:
-            ending = "st"
         default:
             ending = ""
         }
@@ -271,6 +276,20 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         }
         
         self.scrollView.contentSize = CGSizeMake(WIDTH * 24, (HEIGHT + 2 * LBL_HEIGHT))
+        
+    }
+    
+    
+    //Alert user of problem
+    func notification(title: String, message: String) {
+        
+        let titlePrompt = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        titlePrompt.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action) -> Void in
+            
+        }))
+        
+        self.presentViewController(titlePrompt, animated: true, completion: nil)
         
     }
     

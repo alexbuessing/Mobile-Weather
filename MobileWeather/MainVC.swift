@@ -12,7 +12,7 @@ import AddressBookUI
 import Contacts
 import MBProgressHUD
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class MainVC: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var timeDay: UILabel!

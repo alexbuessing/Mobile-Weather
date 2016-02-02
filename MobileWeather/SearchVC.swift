@@ -168,7 +168,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "weatherSegue" {
             
-            if let weatherVC = segue.destinationViewController as? ViewController {
+            if let weatherVC = segue.destinationViewController as? MainVC {
                 if let place = sender as? Location {
                     weatherVC.userLocation = place
                 }

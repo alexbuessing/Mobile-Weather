@@ -334,13 +334,13 @@ class Weather {
             }
         case "partly-cloudy-day":
             if isDaytime() == true {
-                image1 = UIImage(named: "cloudybg.jpg")
+                image1 = UIImage(named: "partlyCloudybg.jpg")
             } else {
                 image1 = UIImage(named: "cloudynightbg.jpg")
             }
         case "partly-cloudy-night":
             if isDaytime() == true {
-                image1 = UIImage(named: "cloudybg.jpg")
+                image1 = UIImage(named: "partlyCloudybg.jpg")
             } else {
                 image1 = UIImage(named: "cloudynightbg.jpg")
             }

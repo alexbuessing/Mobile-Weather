@@ -33,6 +33,21 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var sunrise: UILabel!
     @IBOutlet var sunset: UILabel!
     
+    @IBOutlet var summaryLabel: UILabel!
+    
+    @IBOutlet var firstDayLbl: UILabel!
+    @IBOutlet var secondDayLbl: UILabel!
+    @IBOutlet var thirdDayLbl: UILabel!
+    @IBOutlet var fourthDayLbl: UILabel!
+    @IBOutlet var fifthDayLbl: UILabel!
+    
+    @IBOutlet var firstDayImg: UIImageView!
+    @IBOutlet var secondDayImg: UIImageView!
+    @IBOutlet var thirdDayImg: UIImageView!
+    @IBOutlet var fourthDayImg: UIImageView!
+    @IBOutlet var fifthDayImg: UIImageView!
+    
+    
     var weather = Weather(latitude: 35.996948, longitude: -78.899023)
     var timer: NSTimer!
     var isMainImgShowing = true
@@ -41,7 +56,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     var useCurrentLocation = true
     var loading = false
     
-    
+    var gotLocation = false
+    var count = 0
     
     //Loading views
     override func viewDidLoad() {
@@ -52,15 +68,14 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
             useCurrentLocation = false
         }
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
-        if userLocation.useSearchLocation == false {
+        if checkAuthStatus() {
             locationManager.startUpdatingLocation()
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-
         startTime()
     }
     
@@ -70,24 +85,23 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
             locationButton.alpha = 0.5
             useCurrentLocation = false
         } else if checkAuthStatus() {
+            gotLocation = true
             showLoadingHUD()
-            locationManager.startUpdatingLocation()
-            locationButton.alpha = 1.0
             useCurrentLocation = true
+            userLocation.useSearchLocation = false
+            waitForDownload()
+            locationButton.alpha = 1.0
         } else {
             notification("Location Services Off", message: "Please change location preferences in the settings of your device.")
         }
-        
     }
-    
-    
     
     //Updating weather information
     @IBAction func refreshBtnPressed(sender: AnyObject) {
         
         if useCurrentLocation {
             showLoadingHUD()
-            locationManager.startUpdatingLocation()
+            waitForDownload()
         } else {
             waitForDownload()
         }
@@ -105,11 +119,26 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         mainImg.image = UIImage(named: "\(weather.getImageNumber(weather.todayIcon))")
         sunrise.text = weather.sunrise
         sunset.text = weather.sunset
-        
+        summaryLabel.text = weather.summary
+        firstDayLbl.text = weather.firstDayLbl
+        secondDayLbl.text = weather.secondDayLbl
+        thirdDayLbl.text = weather.thirdDayLbl
+        fourthDayLbl.text = weather.fourthDayLbl
+        fifthDayLbl.text = weather.fifthDayLbl
     }
     
     func waitForDownload() {
         showLoadingHUD()
+        if !userLocation.useSearchLocation {
+            changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
+        } else {
+            changeURL(BASE_URL, latitude: userLocation.latitude, longitude: userLocation.longitude)
+        }
+        if !self.userLocation.useSearchLocation {
+            self.weather.reverseGeocoding(self.weather.latitude, longitude: self.weather.longitude, label: self.location)
+        } else {
+            self.location.text = self.userLocation.locationName
+        }
         weather.downloadWeatherDetails { () -> () in
             self.updateUI()
             self.updateScrollView()
@@ -136,9 +165,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
             case .NotDetermined:
                 locationManager.requestWhenInUseAuthorization()
             case .AuthorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-                weather.reverseGeocoding(locationManager.location!.coordinate.latitude, longitude: locationManager.location!.coordinate.longitude, label: location)
-                setGetValues(locationManager.location!.coordinate.latitude, longitude: locationManager.location!.coordinate.longitude)
+                    locationManager.startUpdatingLocation()
+                print(13)
             case .Denied:
                 notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
                 locationButton.alpha = 0.5
@@ -148,24 +176,21 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
             }
             
         } else {
-            userLocation.useSearchLocation = false
-            location.text! = userLocation.locationName
-            setGetValues(userLocation.latitude, longitude: userLocation.longitude)
+            waitForDownload()
         }
     }
     
+    
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locations = locations.last! as CLLocation
-        weather.reverseGeocoding(weather.latitude, longitude: weather.longitude, label: location)
-        setGetValues(locations.coordinate.latitude, longitude: locations.coordinate.longitude)
-    }
-    
-    func setGetValues(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        weather.latitude = latitude
-        weather.longitude = longitude
-        changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
-        waitForDownload()
-        locationManager.stopUpdatingLocation()
+        weather.latitude = locations.coordinate.latitude
+        weather.longitude = locations.coordinate.longitude
+        if gotLocation == false && !userLocation.useSearchLocation {
+            waitForDownload()
+            gotLocation = true
+            print(1)
+        }
     }
     
     func checkAuthStatus() -> Bool {
@@ -230,10 +255,16 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     //Manages when the images should be hidden and shown
     func showHide(showHide: Bool) {
         
+        self.summaryLabel.hidden = showHide
         self.locationStack.hidden = showHide
         self.mainImg.hidden = showHide
         self.currentTemp.hidden = showHide
         self.timeDay.hidden = showHide
+        self.firstDayLbl.hidden = showHide
+        self.secondDayLbl.hidden = showHide
+        self.thirdDayLbl.hidden = showHide
+        self.fourthDayLbl.hidden = showHide
+        self.fifthDayLbl.hidden = showHide
         
     }
     
@@ -297,6 +328,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     
     //Go to Search ViewController to add locations
     @IBAction func searchBtnPressed(sender: AnyObject) {
+        locationManager.stopUpdatingLocation()
         self.performSegueWithIdentifier("searchSegue", sender: nil)
     }
     

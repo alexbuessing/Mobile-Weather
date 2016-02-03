@@ -28,8 +28,65 @@ class Weather {
     private var _iconArray: Array<String>!
     private var _todayIcon: String!
     private var _bgImg: UIImage!
+    private var _summary: String!
+    private var _firstDayLbl: String!
+    private var _secondDayLbl: String!
+    private var _thirdDayLbl: String!
+    private var _fourthDayLbl: String!
+    private var _fifthDayLbl: String!
+    private var _currentDayLbl: String!
     
     var timer = NSTimer()
+    var dayCounter: Int = 0
+    
+    var currentDayLbl: String {
+        if _currentDayLbl == nil {
+            _currentDayLbl = ""
+        }
+        return _currentDayLbl
+    }
+    
+    var firstDayLbl: String {
+        if _firstDayLbl == nil {
+            _firstDayLbl = ""
+        }
+        return _firstDayLbl
+    }
+    
+    var secondDayLbl: String {
+        if _secondDayLbl == nil {
+            _secondDayLbl = ""
+        }
+        return _secondDayLbl
+    }
+    
+    var thirdDayLbl: String {
+        if _thirdDayLbl == nil {
+            _thirdDayLbl = ""
+        }
+        return _thirdDayLbl
+    }
+    
+    var fourthDayLbl: String {
+        if _fourthDayLbl == nil {
+            _fourthDayLbl = ""
+        }
+        return _fourthDayLbl
+    }
+    
+    var fifthDayLbl: String {
+        if _fifthDayLbl == nil {
+            _fifthDayLbl = ""
+        }
+        return _fifthDayLbl
+    }
+    
+    var summary: String {
+        if _summary == nil {
+            _summary = ""
+        }
+        return _summary
+    }
     
     var bgImg: UIImage {
         if _bgImg == nil {
@@ -156,6 +213,44 @@ class Weather {
         _longitude = longitude
         _weatherURL = "\(BASE_URL)\(latitude),\(longitude)"
         
+        self._currentDayLbl = currentDay()
+        
+        switch _currentDayLbl {
+        case "Sunday":
+            dayCounter = 1
+        case "Monday":
+            dayCounter = 2
+        case "Tuesday":
+            dayCounter = 3
+        case "Wednesday":
+            dayCounter = 4
+        case "Thursday":
+            dayCounter = 5
+        case "Friday":
+            dayCounter = 6
+        case "Saturday":
+            dayCounter = 7
+        default:
+            dayCounter = 1
+            
+        }
+        
+        self._firstDayLbl = daysOfTheWeek[getCorrectDay(1)]
+        self._secondDayLbl = daysOfTheWeek[getCorrectDay(2)]
+        self._thirdDayLbl = daysOfTheWeek[getCorrectDay(3)]
+        self._fourthDayLbl = daysOfTheWeek[getCorrectDay(4)]
+        self._fifthDayLbl = daysOfTheWeek[getCorrectDay(5)]
+        
+    }
+    
+    func getCorrectDay(day: Int) -> Int {
+        var result: Int!
+        if dayCounter + day <= 7 {
+            result = dayCounter + day
+        } else {
+            result = (dayCounter + day - 7)
+        }
+        return result
     }
     
     func getImageNumber(condition: String) -> Int {
@@ -208,6 +303,15 @@ class Weather {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getTimeAndDay", userInfo: nil, repeats: true)
         
+    }
+    
+    func currentDay() -> String {
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .FullStyle
+        formatter.stringFromDate(date)
+        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(",")
+        return dayArr[0]
     }
     
     func getTimeAndDay() -> String {
@@ -316,7 +420,13 @@ class Weather {
             } else {
                 image1 = UIImage(named: "clearnightbg.jpg")
             }
-        case "partly-cloudy-day", "partly-cloudy-night", "cloudy":
+        case "cloudy":
+            if isDaytime() == true {
+                image1 = UIImage(named: "cloudybg.jpg")
+            } else {
+                image1 = UIImage(named: "cloudynightbg.jpg")
+            }
+        case "partly-cloudy-day", "partly-cloudy-night":
             if isDaytime() == true {
                 image1 = UIImage(named: "partlyCloudybg.jpg")
             } else {
@@ -354,6 +464,10 @@ class Weather {
             if let dict = result.value as? Dictionary<String, AnyObject> {
                 
                 if let hourly = dict["hourly"] as? Dictionary<String, AnyObject> {
+                    
+                    if let summary = hourly["summary"] as? String {
+                        self._summary = summary
+                    }
                     
                     if let data = hourly["data"] as? [Dictionary<String, AnyObject>] where data.count > 0 {
                         

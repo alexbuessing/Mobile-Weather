@@ -14,4 +14,6 @@ let WIDTH: CGFloat = 75
 let HEIGHT: CGFloat = 50
 let LBL_HEIGHT: CGFloat = 20
 
+let daysOfTheWeek = [1: "Sunday", 2: "Monday", 3: "Tuesday", 4: "Wednesday", 5: "Thursday", 6: "Friday", 7: "Saturday"]
+
 typealias DownloadComplete = () -> ()

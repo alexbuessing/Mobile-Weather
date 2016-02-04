@@ -364,7 +364,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     
     //Go to Search ViewController to add locations
     @IBAction func searchBtnPressed(sender: AnyObject) {
-        locationManager.stopUpdatingLocation()
+//        locationManager.stopUpdatingLocation()
         self.performSegueWithIdentifier("searchSegue", sender: nil)
     }
     

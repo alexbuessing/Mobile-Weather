@@ -18,8 +18,6 @@ class Weather {
     private var _longitude: CLLocationDegrees!
     private var _location: String!
     private var _weatherURL: String!
-    private var _tempMin: String!
-    private var _tempMax: String!
     private var _currentTemp: String!
     private var _humidity: String!
     private var _windSpeed: String!
@@ -35,9 +33,38 @@ class Weather {
     private var _fourthDayLbl: String!
     private var _fifthDayLbl: String!
     private var _currentDayLbl: String!
+    private var _firstDayIcon: String!
+    private var _secondDayIcon: String!
+    private var _thirdDayIcon: String!
+    private var _fourthDayIcon: String!
+    private var _fifthDayIcon: String!
+    private var _forecastIconArray: Array<String>!
+    private var _tempMinArr: Array<String>!
+    private var _tempMaxArr: Array<String>!
     
     var timer = NSTimer()
     var dayCounter: Int = 0
+    
+    var tempMinArr: Array<String> {
+        if _tempMinArr == nil {
+            _tempMinArr = ["0º","0º","0º","0º","0º","0º"]
+        }
+        return _tempMinArr
+    }
+    
+    var tempMaxArr: Array<String> {
+        if _tempMaxArr == nil {
+            _tempMaxArr = ["32º","32º","32º","32º","32º","32º"]
+        }
+        return _tempMaxArr
+    }
+    
+    var forecastIconArray: Array<String> {
+        if _forecastIconArray == nil {
+            _forecastIconArray = ["clear-day","clear-day","clear-day","clear-day","clear-day"]
+        }
+        return _forecastIconArray
+    }
     
     var currentDayLbl: String {
         if _currentDayLbl == nil {
@@ -156,20 +183,6 @@ class Weather {
         return _windSpeed
     }
     
-    var tempMin: String {
-        if _tempMin == nil {
-            _tempMin = "32.0"
-        }
-        return _tempMin
-    }
-    
-    var tempMax: String {
-        if _tempMax == nil {
-            _tempMax = "72.0"
-        }
-        return _tempMax
-    }
-    
     var currentTemp: String {
         if _currentTemp == nil {
             _currentTemp = "60.0"
@@ -255,28 +268,26 @@ class Weather {
     
     func getImageNumber(condition: String) -> Int {
         
-        switch (condition, isDaytime()) {
-        case ("snow", _):
+        switch condition {
+        case "snow":
             return 9
-        case ("cloudy", false):
-            return 15
-        case ("cloudy", true):
+        case "cloudy":
             return 14
-        case ("partly-cloudy-night", _):
+        case "partly-cloudy-night":
             return 8
-        case ("partly-cloudy-day", _):
+        case "partly-cloudy-day":
             return 7
-        case ("clear-day", _):
+        case "clear-day":
             return 1
-        case ("clear-night", _):
+        case "clear-night":
             return 2
-        case ("rain", _):
+        case "rain":
             return 3
-        case ("sleet", _):
+        case "sleet":
             return 13
-        case ("wind", _):
+        case "wind":
             return 10
-        case ("fog", _):
+        case "fog":
             return 5
         default:
             return 1
@@ -529,14 +540,30 @@ class Weather {
                     if let data = today["data"] as? [Dictionary<String, AnyObject>] where data.count > 0 {
                         
                         //clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night.
-                        
-                        if let tempsMin = data[0]["temperatureMin"] as? Double {
-                            self._tempMin = NSString(format: "%.0f", tempsMin) as String
+                        var tempArr = Array<String>()
+                        for var x = 1; x <= 5; x++ {
+                            if let forecastIcon = data[x]["icon"] as? String {
+                                tempArr.append(forecastIcon)
+                            }
                         }
+                        self._forecastIconArray = tempArr
+                        tempArr = []
                         
-                        if let tempsMax = data[0]["temperatureMax"] as? Double {
-                            self._tempMax = NSString(format: "%.0f", tempsMax) as String
+                        for var x = 0; x <= 5; x++ {
+                            if let minTemps = data[x]["temperatureMin"] as? Double {
+                                tempArr.append(NSString(format: "%.0f", minTemps) as String)
+                            }
                         }
+                        self._tempMinArr = tempArr
+                        tempArr = []
+                        
+                        for var x = 0; x <= 5; x++ {
+                            if let maxTemps = data[x]["temperatureMax"] as? Double {
+                                tempArr.append(NSString(format: "%.0f", maxTemps) as String)
+                            }
+                        }
+                        self._tempMaxArr = tempArr
+                        tempArr = []
                         
                         if let sunriseTime = data[0]["sunriseTime"] as? Double {
                             let date = NSDate(timeIntervalSince1970: sunriseTime)

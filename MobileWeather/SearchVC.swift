@@ -59,7 +59,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             }
             else if placemarks?.count > 0 {
                 let pm = placemarks![0]
-                self.locationArray.append("\(pm.subAdministrativeArea!), \(pm.administrativeArea!)")
+                self.locationArray.append("\(pm.locality!), \(pm.administrativeArea!)")
                 self.defaults.setObject(self.locationArray, forKey: "locationArray")
                 self.tableView.reloadData()
             }

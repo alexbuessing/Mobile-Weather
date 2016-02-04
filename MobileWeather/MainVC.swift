@@ -47,6 +47,24 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var fourthDayImg: UIImageView!
     @IBOutlet var fifthDayImg: UIImageView!
     
+    @IBOutlet var firstDayLow: UILabel!
+    @IBOutlet var secondDayLow: UILabel!
+    @IBOutlet var thirdDayLow: UILabel!
+    @IBOutlet var fourthDayLow: UILabel!
+    @IBOutlet var fifthDayLow: UILabel!
+    
+    @IBOutlet var firstDayHigh: UILabel!
+    @IBOutlet var secondDayHigh: UILabel!
+    @IBOutlet var thirdDayHigh: UILabel!
+    @IBOutlet var fourthDayHigh: UILabel!
+    @IBOutlet var fifthDayHigh: UILabel!
+    
+    @IBOutlet var forecastStack: UIStackView!
+    @IBOutlet var viewBreak1: UIView!
+    @IBOutlet var viewBreak2: UIView!
+    @IBOutlet var viewBreak3: UIView!
+    @IBOutlet var hourlyLbl: UILabel!
+    @IBOutlet var forecastLbl: UILabel!
     
     var weather = Weather(latitude: 35.996948, longitude: -78.899023)
     var timer: NSTimer!
@@ -112,8 +130,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         weather.getImage(weather.todayIcon)
         bgImage.image = weather.bgImg
         currentTemp.text = "\(weather.currentTemp)º"
-        todayLow.text = "\(weather.tempMin)º"
-        todayHigh.text = "\(weather.tempMax)º"
+        todayLow.text = "\(weather.tempMinArr[0])º"
+        todayHigh.text = "\(weather.tempMaxArr[0])º"
         humidity.text = "\(weather.humidity)%"
         windSpeed.text = "\(weather.windSpeed)MPH"
         mainImg.image = UIImage(named: "\(weather.getImageNumber(weather.todayIcon))")
@@ -125,6 +143,21 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         thirdDayLbl.text = weather.thirdDayLbl
         fourthDayLbl.text = weather.fourthDayLbl
         fifthDayLbl.text = weather.fifthDayLbl
+        firstDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[0]))")
+        secondDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[1]))")
+        thirdDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[2]))")
+        fourthDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[3]))")
+        fifthDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[4]))")
+        firstDayLow.text = weather.tempMinArr[1] + "º"
+        firstDayHigh.text = weather.tempMaxArr[1] + "º"
+        secondDayLow.text = weather.tempMinArr[2] + "º"
+        secondDayHigh.text = weather.tempMaxArr[2] + "º"
+        thirdDayLow.text = weather.tempMinArr[3] + "º"
+        thirdDayHigh.text = weather.tempMaxArr[3] + "º"
+        fourthDayLow.text = weather.tempMinArr[4] + "º"
+        fourthDayHigh.text = weather.tempMaxArr[4] + "º"
+        fifthDayLow.text = weather.tempMinArr[5] + "º"
+        fifthDayHigh.text = weather.tempMaxArr[5] + "º"
     }
     
     func waitForDownload() {
@@ -166,7 +199,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
                 locationManager.requestWhenInUseAuthorization()
             case .AuthorizedWhenInUse:
                     locationManager.startUpdatingLocation()
-                print(13)
             case .Denied:
                 notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
                 locationButton.alpha = 0.5
@@ -189,7 +221,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         if gotLocation == false && !userLocation.useSearchLocation {
             waitForDownload()
             gotLocation = true
-            print(1)
         }
     }
     
@@ -265,7 +296,12 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         self.thirdDayLbl.hidden = showHide
         self.fourthDayLbl.hidden = showHide
         self.fifthDayLbl.hidden = showHide
-        
+        self.forecastStack.hidden = showHide
+        self.viewBreak1.hidden = showHide
+        self.viewBreak2.hidden = showHide
+        self.viewBreak3.hidden = showHide
+        self.hourlyLbl.hidden = showHide
+        self.forecastLbl.hidden = showHide
     }
     
     

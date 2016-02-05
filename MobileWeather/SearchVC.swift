@@ -131,7 +131,6 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? LocationCell {
-            
             let locations = locationArray[indexPath.row]
             cell.configureCell(locations)
             return cell

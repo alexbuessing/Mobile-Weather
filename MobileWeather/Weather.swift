@@ -304,7 +304,7 @@ class Weather {
             }
             else if placemarks?.count > 0 {
                 let pm = placemarks![0]
-                label.text = "\(pm.subAdministrativeArea!), \(pm.administrativeArea!)"
+                label.text = "\(pm.locality!), \(pm.administrativeArea!)"
             }
         })
         
@@ -413,12 +413,14 @@ class Weather {
             } else {
                 image1 = UIImage(named: "nightrainbg.jpg")
             }
-        case "snow", "sleet":
+        case "snow":
             if isDaytime() == true {
                 image1 = UIImage(named: "snowbg.jpg")
             } else {
                 image1 = UIImage(named: "snowbg.jpg")
             }
+        case "sleet":
+            image1 = UIImage(named: "sleetbg.jpg")
         case "fog":
             if isDaytime() == true {
                 image1 = UIImage(named: "hazebg.jpg")

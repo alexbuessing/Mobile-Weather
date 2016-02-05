@@ -833,7 +833,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.23126980526894325" green="0.57701557448700103" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.23126980529999999" green="0.57701557449999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="h88-Vw-Wg9" secondAttribute="trailing" constant="8" id="4OW-bQ-ddw"/>
                                     <constraint firstItem="eKG-KQ-klE" firstAttribute="centerY" secondItem="h88-Vw-Wg9" secondAttribute="centerY" id="4dp-iq-ZXg"/>
@@ -947,7 +947,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1075"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear" translatesAutoresizingMaskIntoConstraints="NO" id="9cr-LS-WEc">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tablebg" translatesAutoresizingMaskIntoConstraints="NO" id="9cr-LS-WEc">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="1075"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="478-uh-kQr" customClass="HeaderDetailView" customModule="WeatherIt" customModuleProvider="target">
@@ -966,7 +966,7 @@
                                             <action selector="searchBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aCR-Iu-f5O"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Locations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aq0-2E-9Rd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aq0-2E-9Rd">
                                         <rect key="frame" x="225" y="24" width="150" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="BxU-a5-JZO"/>
@@ -1108,12 +1108,12 @@
     <resources>
         <image name="1" width="604" height="604"/>
         <image name="backBtnWhite" width="360" height="360"/>
-        <image name="clear" width="414" height="736"/>
         <image name="forwardBtnWhite" width="360" height="360"/>
         <image name="locationIcon" width="243" height="243"/>
         <image name="markerwhite" width="468" height="553"/>
         <image name="refresh" width="609" height="608"/>
         <image name="search" width="200" height="200"/>
         <image name="sunbg" width="570" height="674"/>
+        <image name="tablebg" width="1507" height="2601"/>
     </resources>
 </document>

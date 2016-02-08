@@ -35,7 +35,9 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     }
     
     
+    //-----------------------------------------------------------------------------------------
     
+
     //Loads locations and coordinates that user requested
     func loadData() {
         
@@ -67,7 +69,6 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         
     }
     
-    //Get Coordinates of users input
     func forwardGeocoding(address: String) {
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
             if error != nil {
@@ -90,6 +91,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     }
     
     
+    //-----------------------------------------------------------------------------------------
+    
     
     //Adds location to UITableView
     @IBAction func addLocationBtnPressed(sender: AnyObject) {
@@ -103,6 +106,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         
     }
     
+    
+    //-----------------------------------------------------------------------------------------
     
     
     //Alert user of failed location input
@@ -118,6 +123,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                     
     }
     
+    
+    //-----------------------------------------------------------------------------------------
     
     
     //Functions to handle UITableView
@@ -175,6 +182,9 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         }
     }
     
+   
+    //-----------------------------------------------------------------------------------------
+    
     
     //Return to Home Screen
     @IBAction func backBtnPressed(sender: AnyObject) {
@@ -183,6 +193,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         
     }
     
+    
+    //-----------------------------------------------------------------------------------------
     
     
     //Functions that hide keyboard

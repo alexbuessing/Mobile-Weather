@@ -266,6 +266,18 @@ class Weather {
         return result
     }
     
+    func currentDay() -> String {
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .FullStyle
+        formatter.stringFromDate(date)
+        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(",")
+        return dayArr[0]
+    }
+    
+    //-----------------------------------------------------------------------------------------
+    
+    
     func getImageNumber(condition: String) -> Int {
         
         switch condition {
@@ -295,6 +307,11 @@ class Weather {
         }
     }
     
+    
+    //-----------------------------------------------------------------------------------------
+    
+    
+    //Gets users city and state based off coordinates
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees, label: UILabel) {
         let location = CLLocation(latitude: latitude, longitude: longitude)
         CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) in
@@ -310,47 +327,11 @@ class Weather {
         
     }
     
-    func startTime() {
-        
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getTimeAndDay", userInfo: nil, repeats: true)
-        
-    }
     
-    func currentDay() -> String {
-        let date = NSDate()
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .FullStyle
-        formatter.stringFromDate(date)
-        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(",")
-        return dayArr[0]
-    }
+    //-----------------------------------------------------------------------------------------
     
-    func getTimeAndDay() -> String {
-        let date = NSDate()
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .FullStyle
-        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(" ")
-        let day = dayArr[0].stringByReplacingOccurrencesOfString(",", withString: "")
-        let date2 = NSDate()
-        let formatter2 = NSDateFormatter()
-        formatter2.timeStyle = .FullStyle
-        var fullTime = String(formatter2.stringFromDate(date2)).componentsSeparatedByString(" ")
-        let morningAfternoon = fullTime[1]
-        let time = String(fullTime[0].characters.dropLast(3))
-        return "\(time) \(morningAfternoon) \(day)"
-    }
     
-    func parseTime(time: String) -> Array<String> {
-        
-        var arrayContainer = time.componentsSeparatedByString(":")
-        arrayContainer.append(arrayContainer[1].componentsSeparatedByString(" ")[0])
-        let testArray = time.componentsSeparatedByString(" ")
-        arrayContainer.removeAtIndex(1)
-        arrayContainer.append(testArray[1])
-        
-        return arrayContainer
-    }
-    
+    //Tells weather the current time is between sunrise and sunset or between sunset and sunrise
     func isDaytime() -> Bool {
         
         let str = getTimeAndDay()
@@ -395,6 +376,36 @@ class Weather {
             return false
         }
     }
+    
+    func getTimeAndDay() -> String {
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .FullStyle
+        let dayArr = String(formatter.stringFromDate(date)).componentsSeparatedByString(" ")
+        let day = dayArr[0].stringByReplacingOccurrencesOfString(",", withString: "")
+        let date2 = NSDate()
+        let formatter2 = NSDateFormatter()
+        formatter2.timeStyle = .FullStyle
+        var fullTime = String(formatter2.stringFromDate(date2)).componentsSeparatedByString(" ")
+        let morningAfternoon = fullTime[1]
+        let time = String(fullTime[0].characters.dropLast(3))
+        return "\(time) \(morningAfternoon) \(day)"
+    }
+    
+    func parseTime(time: String) -> Array<String> {
+        
+        var arrayContainer = time.componentsSeparatedByString(":")
+        arrayContainer.append(arrayContainer[1].componentsSeparatedByString(" ")[0])
+        let testArray = time.componentsSeparatedByString(" ")
+        arrayContainer.removeAtIndex(1)
+        arrayContainer.append(testArray[1])
+        
+        return arrayContainer
+    }
+    
+    
+    //-----------------------------------------------------------------------------------------
+    
     
     func getImage(condition: String) {
         
@@ -459,13 +470,9 @@ class Weather {
         
     }
     
-    func kelvinToFarenheit(kelvin: String) -> String {
-        
-        var farenheit: Double
-        farenheit = round((Double(kelvin)! - 273.15) * 1.8 + 32)
-        
-        return NSString(format: "%.0f", farenheit) as String
-    }
+    
+    //-----------------------------------------------------------------------------------------
+    
     
     func downloadWeatherDetails(completed: DownloadComplete) {
         

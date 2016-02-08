@@ -73,9 +73,14 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     var userLocation = Location()
     var useCurrentLocation = true
     var loading = false
-    
     var gotLocation = false
-    var count = 0
+    let WIDTH: CGFloat = 75
+    let HEIGHT: CGFloat = 50
+    let LBL_HEIGHT: CGFloat = 20
+    
+    
+    //-----------------------------------------------------------------------------------------
+    
     
     //Loading views
     override func viewDidLoad() {
@@ -97,6 +102,11 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         startTime()
     }
     
+    
+    //-----------------------------------------------------------------------------------------
+    
+    
+    //Updating weather information
     @IBAction func currentLocationPressed(sender: AnyObject) {
         
         if useCurrentLocation {
@@ -114,7 +124,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    //Updating weather information
     @IBAction func refreshBtnPressed(sender: AnyObject) {
         
         if useCurrentLocation {
@@ -188,6 +197,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    //-----------------------------------------------------------------------------------------
+    
     
     //Location methods to get user coordinates
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -212,8 +223,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    
-    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locations = locations.last! as CLLocation
         weather.latitude = locations.coordinate.latitude
@@ -233,6 +242,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     }
 
     
+    //-----------------------------------------------------------------------------------------
+    
+    
     //Flips the main image view with the details view
     @IBAction func mainImgTap(gesture: UIGestureRecognizer) {
         
@@ -246,6 +258,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    
+    //-----------------------------------------------------------------------------------------
     
     
     //Manages the date
@@ -282,6 +296,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    //-----------------------------------------------------------------------------------------
+    
     
     //Manages when the images should be hidden and shown
     func showHide(showHide: Bool) {
@@ -304,6 +320,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
         self.forecastLbl.hidden = showHide
     }
     
+    
+    //-----------------------------------------------------------------------------------------
     
     
     //Handles the horizontal hourly scrollView
@@ -347,6 +365,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    //-----------------------------------------------------------------------------------------
+    
+    
     //Alert user of problem
     func notification(title: String, message: String) {
         
@@ -361,12 +382,16 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    //-----------------------------------------------------------------------------------------
+    
     
     //Go to Search ViewController to add locations
     @IBAction func searchBtnPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("searchSegue", sender: nil)
     }
     
+    
+    //-----------------------------------------------------------------------------------------
     
     
     //Progress loading bar methods

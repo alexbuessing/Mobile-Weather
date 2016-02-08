@@ -183,7 +183,7 @@
 				TargetAttributes = {
 					FA3A7ED11C51387800539E83 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = PUL5R32XSS;
+						DevelopmentTeam = 7PT4PEMTAU;
 					};
 				};
 			};
@@ -394,10 +394,13 @@
 			baseConfigurationReference = 735D2AA1D692EA279B2C4F35 /* Pods-MobileWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				INFOPLIST_FILE = MobileWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.buessing.MobileWeather;
+				PRODUCT_BUNDLE_IDENTIFIER = com.buessing.myWeather;
 				PRODUCT_NAME = WeatherIt;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -407,10 +410,13 @@
 			baseConfigurationReference = 12626CFCB29ACB5320B7E471 /* Pods-MobileWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				INFOPLIST_FILE = MobileWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.buessing.MobileWeather;
+				PRODUCT_BUNDLE_IDENTIFIER = com.buessing.myWeather;
 				PRODUCT_NAME = WeatherIt;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

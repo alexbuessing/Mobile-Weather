@@ -12,7 +12,7 @@ import AddressBookUI
 import Contacts
 import MBProgressHUD
 
-class MainVC: UIViewController, CLLocationManagerDelegate {
+class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var timeDay: UILabel!
@@ -32,6 +32,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var contentView: UIView!
     @IBOutlet var sunrise: UILabel!
     @IBOutlet var sunset: UILabel!
+    @IBOutlet var backgroundScroll: UIScrollView!
+    @IBOutlet var headerView: HeaderDetailView!
+
     
     @IBOutlet var summaryLabel: UILabel!
     
@@ -78,7 +81,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     let HEIGHT: CGFloat = 50
     let LBL_HEIGHT: CGFloat = 20
     
-    
     //-----------------------------------------------------------------------------------------
     
     
@@ -90,6 +92,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
             locationButton.alpha = 0.5
             useCurrentLocation = false
         }
+        
+        backgroundScroll.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
@@ -100,6 +104,37 @@ class MainVC: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         startTime()
+    }
+    
+    //-----------------------------------------------------------------------------------------
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        let opacity = backgroundScroll.contentOffset.y / (358.0 * 75)
+        
+        if opacity >= 0 {
+            
+            switch round(backgroundScroll.contentOffset.y) {
+            case 0...45:
+                headerView.alpha = 1.0
+            case 46...90:
+                headerView.alpha = 0.9
+            case 91...135:
+                headerView.alpha = 0.8
+            case 136...180:
+                headerView.alpha = 0.7
+            case 181...245:
+                headerView.alpha = 0.6
+            case 246...290:
+                headerView.alpha = 0.5
+            case 291...335:
+                headerView.alpha = 0.4
+            case 336...1000:
+                headerView.alpha = 0.3
+            default:
+                headerView.alpha = 0.5
+            }
+        }
     }
     
     

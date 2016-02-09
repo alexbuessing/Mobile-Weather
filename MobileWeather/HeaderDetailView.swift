@@ -12,7 +12,7 @@ class HeaderDetailView: UIView {
 
     override func awakeFromNib() {
         
-        layer.backgroundColor = UIColor(red: 59.0 / 255.0, green: 147.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.5).CGColor
+        layer.backgroundColor = UIColor(red: 59.0 / 255.0, green: 147.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.7).CGColor
         
     }
 }

@@ -289,7 +289,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="zcm-X5-6Le">
                                                         <rect key="frame" x="8" y="8" width="568" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wednesday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fW-Tx-LG0">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wednesday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="3fW-Tx-LG0">
                                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="Ffz-zC-J3S"/>
@@ -378,7 +378,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qhE-XO-5RA">
                                                         <rect key="frame" x="8" y="8" width="568" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thursday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxU-AP-9Eq">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thursday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="oxU-AP-9Eq">
                                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="105" id="09O-ot-wmD"/>
@@ -457,7 +457,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="lKa-Xh-TmQ">
                                                         <rect key="frame" x="8" y="8" width="568" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae4-9T-0e9">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Ae4-9T-0e9">
                                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="Txw-NG-Z57"/>
@@ -536,7 +536,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gLc-jc-JID">
                                                         <rect key="frame" x="8" y="8" width="568" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saturday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HbB-hk-0Dr">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saturday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="HbB-hk-0Dr">
                                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="kkA-ey-KTs"/>
@@ -615,7 +615,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="4bD-IT-vCQ">
                                                         <rect key="frame" x="8" y="8" width="568" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Byw-A6-h9J">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Byw-A6-h9J">
                                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="105" id="EZG-VI-XL2"/>
@@ -769,7 +769,14 @@
                                     </mask>
                                 </variation>
                             </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xt4-Lp-uMi" customClass="HeaderDetailView" customModule="WeatherIt" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Sy-hl-9oP" customClass="HeaderDetailView" customModule="WeatherIt" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.48627450980392156" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="u58-16-vMi"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xt4-Lp-uMi">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3k-8S-Y2W">
@@ -833,7 +840,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.23126980529999999" green="0.57701557449999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="h88-Vw-Wg9" secondAttribute="trailing" constant="8" id="4OW-bQ-ddw"/>
                                     <constraint firstItem="eKG-KQ-klE" firstAttribute="centerY" secondItem="h88-Vw-Wg9" secondAttribute="centerY" id="4dp-iq-ZXg"/>
@@ -859,12 +866,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3Sy-hl-9oP" secondAttribute="trailing" id="9A8-pB-fMF"/>
                             <constraint firstItem="YJf-oU-8el" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Brx-Zr-ZyO"/>
+                            <constraint firstItem="3Sy-hl-9oP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Gzs-pN-F1Y"/>
                             <constraint firstItem="xt4-Lp-uMi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="HOg-6O-TWb"/>
                             <constraint firstItem="YJf-oU-8el" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="HXM-wo-nQW"/>
                             <constraint firstItem="YJf-oU-8el" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="KrY-Cq-ukr"/>
                             <constraint firstAttribute="trailing" secondItem="xt4-Lp-uMi" secondAttribute="trailing" id="LBC-ce-DHl"/>
                             <constraint firstItem="xt4-Lp-uMi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MqT-k6-3ad"/>
+                            <constraint firstItem="3Sy-hl-9oP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fL6-Ac-6Pc"/>
                             <constraint firstItem="8UF-rl-pcL" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="pAn-4H-w5t"/>
                             <constraint firstItem="YJf-oU-8el" firstAttribute="trailing" secondItem="xt4-Lp-uMi" secondAttribute="trailing" id="pAq-Cu-I8r"/>
                             <constraint firstItem="YJf-oU-8el" firstAttribute="leading" secondItem="xt4-Lp-uMi" secondAttribute="leading" id="scx-2E-8B1"/>
@@ -878,6 +888,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1075"/>
                     <connections>
+                        <outlet property="backgroundScroll" destination="YJf-oU-8el" id="Abl-49-ooR"/>
                         <outlet property="bgImage" destination="8UF-rl-pcL" id="uhe-Dm-Dln"/>
                         <outlet property="containerView" destination="GXk-fw-bRA" id="X5r-a9-gJv"/>
                         <outlet property="contentView" destination="8bC-Xf-vdC" id="eY8-Na-c1B"/>
@@ -897,6 +908,7 @@
                         <outlet property="fourthDayImg" destination="AYf-5X-9EJ" id="7oV-2q-CwX"/>
                         <outlet property="fourthDayLbl" destination="HbB-hk-0Dr" id="e5B-ns-yGX"/>
                         <outlet property="fourthDayLow" destination="vEj-24-W4m" id="lEV-Iv-pSu"/>
+                        <outlet property="headerView" destination="3Sy-hl-9oP" id="qyE-rx-ELA"/>
                         <outlet property="hourlyLbl" destination="Uih-oD-H8L" id="X4B-Db-B9w"/>
                         <outlet property="humidity" destination="gzR-Sc-W2b" id="sSM-RC-DJN"/>
                         <outlet property="location" destination="BsC-u8-1mA" id="jDd-nO-E5L"/>
@@ -979,7 +991,7 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.23126980529999999" green="0.57701557449999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.48627450980392156" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="6UB-kp-ZUB"/>
                                     <constraint firstItem="aq0-2E-9Rd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1Eh-7F-8gi" secondAttribute="trailing" constant="10" id="Cdn-mE-FCO"/>

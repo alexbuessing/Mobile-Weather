@@ -241,28 +241,26 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     
     //Location methods to get user coordinates
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if weather.connectedToNetwork() {
+
             if userLocation.useSearchLocation == false && useCurrentLocation == true {
             
-                switch status {
-                case .NotDetermined:
-                    locationManager.requestWhenInUseAuthorization()
-                case .AuthorizedWhenInUse:
-                    locationManager.startUpdatingLocation()
-                case .Denied:
-                    notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
-                    locationButton.alpha = 0.5
-                    useCurrentLocation = false
-                default:
-                    break
-                }
-            
-            } else {
-                waitForDownload()
+            switch status {
+            case .NotDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            case .AuthorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            case .Denied:
+                notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
+                locationButton.alpha = 0.5
+                useCurrentLocation = false
+            default:
+                break
             }
-        }else {
-            notification("Internet Connection Lost!", message: "You are currently not connected to the internet.")
+            
+        } else {
+            waitForDownload()
         }
+
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SystemConfiguration
 
 class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
@@ -97,13 +98,16 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     //Adds location to UITableView
     @IBAction func addLocationBtnPressed(sender: AnyObject) {
 
-        if addLocationText.text != nil && addLocationText.text != "" {
-            forwardGeocoding(addLocationText.text!)
+        if connectedToNetwork() {
+            if addLocationText.text != nil && addLocationText.text != "" {
+                forwardGeocoding(addLocationText.text!)
             
+            } else {
+                notification("Oops! No Location Found", message: "Please enter a location.")
+            }
         } else {
-            notification("Oops! No Location Found", message: "Please enter a location.")
+            notification("Internet Connection Lost!", message: "You are currently not connected to the internet.")
         }
-        
     }
     
     
@@ -219,6 +223,32 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     
     func hideKeyboard() {
         addLocationText.resignFirstResponder()
+    }
+    
+    
+    //-----------------------------------------------------------------------------------------
+    
+    
+    func connectedToNetwork() -> Bool {
+        
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(&zeroAddress, {
+            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        }) else {
+            return false
+        }
+        
+        var flags : SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+            return false
+        }
+        
+        let isReachable = flags.contains(.Reachable)
+        let needsConnection = flags.contains(.ConnectionRequired)
+        return (isReachable && !needsConnection)
     }
     
 }

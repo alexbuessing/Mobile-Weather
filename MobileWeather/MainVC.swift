@@ -11,6 +11,7 @@ import CoreLocation
 import AddressBookUI
 import Contacts
 import MBProgressHUD
+import SystemConfiguration
 
 class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate {
 
@@ -81,6 +82,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     let HEIGHT: CGFloat = 50
     let LBL_HEIGHT: CGFloat = 20
     
+    
     //-----------------------------------------------------------------------------------------
     
     
@@ -88,6 +90,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         if userLocation.useSearchLocation == true {
             locationButton.alpha = 0.5
             useCurrentLocation = false
@@ -161,12 +164,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     
     @IBAction func refreshBtnPressed(sender: AnyObject) {
         
-        if useCurrentLocation {
-            showLoadingHUD()
             waitForDownload()
-        } else {
-            waitForDownload()
-        }
+
     }
     
     func updateUI() {
@@ -205,24 +204,29 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     }
     
     func waitForDownload() {
-        showLoadingHUD()
-        if !userLocation.useSearchLocation {
-            changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
+        if weather.connectedToNetwork() {
+            showLoadingHUD()
+            if !userLocation.useSearchLocation {
+                changeURL(BASE_URL, latitude: weather.latitude, longitude: weather.longitude)
+            } else {
+                changeURL(BASE_URL, latitude: userLocation.latitude, longitude: userLocation.longitude)
+            }
+            if !self.userLocation.useSearchLocation {
+                self.weather.reverseGeocoding(self.weather.latitude, longitude: self.weather.longitude, label: self.location)
+            } else {
+                self.location.text = self.userLocation.locationName
+            }
+            weather.downloadWeatherDetails { () -> () in
+                self.updateUI()
+                self.updateScrollView()
+                self.hideLoadingHUD()
+                self.showHide(false)
+            }
+            getDate()
         } else {
-            changeURL(BASE_URL, latitude: userLocation.latitude, longitude: userLocation.longitude)
+            notification("Internet Connection Lost!", message: "You are currently not connected to the internet.")
         }
-        if !self.userLocation.useSearchLocation {
-            self.weather.reverseGeocoding(self.weather.latitude, longitude: self.weather.longitude, label: self.location)
-        } else {
-            self.location.text = self.userLocation.locationName
-        }
-        weather.downloadWeatherDetails { () -> () in
-            self.updateUI()
-            self.updateScrollView()
-            self.hideLoadingHUD()
-            self.showHide(false)
-        }
-        getDate()
+        
     }
     
     func changeURL(base: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -237,24 +241,27 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     
     //Location methods to get user coordinates
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        
-        if userLocation.useSearchLocation == false && useCurrentLocation == true {
+        if weather.connectedToNetwork() {
+            if userLocation.useSearchLocation == false && useCurrentLocation == true {
             
-            switch status {
-            case .NotDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            case .AuthorizedWhenInUse:
+                switch status {
+                case .NotDetermined:
+                    locationManager.requestWhenInUseAuthorization()
+                case .AuthorizedWhenInUse:
                     locationManager.startUpdatingLocation()
-            case .Denied:
-                notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
-                locationButton.alpha = 0.5
-                useCurrentLocation = false
-            default:
-                break
-            }
+                case .Denied:
+                    notification("Location Services Off", message: "Please search for a location by using the search icon in the top right corner.")
+                    locationButton.alpha = 0.5
+                    useCurrentLocation = false
+                default:
+                    break
+                }
             
-        } else {
-            waitForDownload()
+            } else {
+                waitForDownload()
+            }
+        }else {
+            notification("Internet Connection Lost!", message: "You are currently not connected to the internet.")
         }
     }
     

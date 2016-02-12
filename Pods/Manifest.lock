@@ -1,13 +1,20 @@
 PODS:
   - Alamofire (3.1.5)
+  - Crashlytics (3.6.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.5)
   - MBProgressHUD (0.9.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
+  - Crashlytics
+  - Fabric
   - MBProgressHUD (~> 0.9.1)
 
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
+  Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
+  Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
 
 COCOAPODS: 0.39.0

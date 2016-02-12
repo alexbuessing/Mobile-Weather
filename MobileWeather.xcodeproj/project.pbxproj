@@ -161,6 +161,7 @@
 				FA3A7ED01C51387800539E83 /* Resources */,
 				ACA0A30A5B81558D074758D1 /* Embed Pods Frameworks */,
 				11F5F616B99DE7E18EE62A8A /* Copy Pods Resources */,
+				FAB65F661C6E259B00C1C5A2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -263,6 +264,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileWeather/Pods-MobileWeather-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FAB65F661C6E259B00C1C5A2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" a049fcaedc1eb8c043bfc359890c6b4435d56671 c73e2fb5be6630c3f061321ac2c494120d1426265269eb3379fe574b683eb563";
 		};
 /* End PBXShellScriptBuildPhase section */
 

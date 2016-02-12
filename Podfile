@@ -5,5 +5,7 @@ use_frameworks!
 target ‘MobileWeather' do
 pod 'Alamofire', '~> 3.0'
 pod 'MBProgressHUD', '~> 0.9.1'
+pod 'Fabric'
+pod 'Crashlytics'
 end
 

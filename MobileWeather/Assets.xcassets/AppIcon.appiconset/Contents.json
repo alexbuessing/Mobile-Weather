@@ -23,13 +23,13 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "weather icon.png",
+      "filename" : "WeatherIt6.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "weatherIcon6Plus.png",
+      "filename" : "WeatherIt6Plus.png",
       "scale" : "3x"
     },
     {
@@ -53,18 +53,21 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "WeatherItiPad.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "WeatherItiPad-1.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "WeatherItiPadPro.png",
       "scale" : "2x"
     }
   ],

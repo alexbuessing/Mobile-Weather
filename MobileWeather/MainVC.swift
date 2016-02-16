@@ -143,7 +143,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if backgroundScroll.contentOffset.y < -110 {
+        if backgroundScroll.contentOffset.y < -100 {
             refreshBtn.alpha = 0.5
             waitForDownload()
         }

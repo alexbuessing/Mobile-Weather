@@ -864,7 +864,7 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="3Sy-hl-9oP" secondAttribute="trailing" id="9A8-pB-fMF"/>
                             <constraint firstItem="YJf-oU-8el" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Brx-Zr-ZyO"/>
@@ -916,6 +916,7 @@
                         <outlet property="locationStack" destination="eKG-KQ-klE" id="azH-Pm-aZN"/>
                         <outlet property="mainImg" destination="G8b-zH-jEE" id="61U-S9-Z7L"/>
                         <outlet property="mainImgView" destination="nqG-lt-H6p" id="eIs-Fh-ek2"/>
+                        <outlet property="refreshBtn" destination="P3k-8S-Y2W" id="L61-Yp-CaA"/>
                         <outlet property="scrollView" destination="f5N-eE-zWe" id="YJC-r4-UAX"/>
                         <outlet property="secondDayHigh" destination="5HF-yH-dT9" id="38h-oU-WDG"/>
                         <outlet property="secondDayImg" destination="s66-NF-DJG" id="ucT-jF-TW5"/>

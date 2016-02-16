@@ -35,6 +35,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     @IBOutlet var sunset: UILabel!
     @IBOutlet var backgroundScroll: UIScrollView!
     @IBOutlet var headerView: HeaderDetailView!
+    @IBOutlet var refreshBtn: UIButton!
 
     
     @IBOutlet var summaryLabel: UILabel!
@@ -138,6 +139,12 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
                 headerView.alpha = 0.5
             }
         }
+        
+        if backgroundScroll.contentOffset.y < -110 {
+            refreshBtn.alpha = 0.5
+            waitForDownload()
+        }
+        
     }
     
     
@@ -163,8 +170,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     }
     
     @IBAction func refreshBtnPressed(sender: AnyObject) {
-        
-            waitForDownload()
+        refreshBtn.alpha = 0.5
+        waitForDownload()
 
     }
     
@@ -221,6 +228,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
                 self.updateScrollView()
                 self.hideLoadingHUD()
                 self.showHide(false)
+                if self.refreshBtn.alpha == 0.5 {
+                    self.refreshBtn.alpha = 1.0
+                }
             }
             getDate()
         } else {

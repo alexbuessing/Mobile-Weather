@@ -13,7 +13,7 @@ import Contacts
 import MBProgressHUD
 import SystemConfiguration
 
-class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate {
+class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate, UIApplicationDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var timeDay: UILabel!
@@ -38,6 +38,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     @IBOutlet var refreshBtn: UIButton!
 
     
+    @IBOutlet var animationView: UIView!
     @IBOutlet var summaryLabel: UILabel!
     
     @IBOutlet var firstDayLbl: UILabel!
@@ -82,7 +83,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     let WIDTH: CGFloat = 75
     let HEIGHT: CGFloat = 50
     let LBL_HEIGHT: CGFloat = 20
-    
+    var plusOrMinus: CGFloat = 1
+    let notification = NSNotificationCenter.defaultCenter()
     
     //-----------------------------------------------------------------------------------------
     
@@ -91,6 +93,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //notification.addObserver(self, selector: "waitForDownload", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         
         if userLocation.useSearchLocation == true {
             locationButton.alpha = 0.5
@@ -105,10 +110,19 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
             locationManager.startUpdatingLocation()
         }
     }
-    
-    override func viewDidAppear(animated: Bool) {
+
+    override func viewWillAppear(animated: Bool) {
+        notification.addObserver(self, selector: "waitForDownload", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        notification.addObserver(self, selector: "startTime", name: UIApplicationDidBecomeActiveNotification, object: nil)
         startTime()
+        waitForDownload()
     }
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        notification.removeObserver(UIApplicationDidBecomeActiveNotification)
+    }
+    
     
     //-----------------------------------------------------------------------------------------
     
@@ -174,7 +188,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
     @IBAction func refreshBtnPressed(sender: AnyObject) {
         refreshBtn.alpha = 0.5
         waitForDownload()
-
     }
     
     func updateUI() {
@@ -210,6 +223,15 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
         fourthDayHigh.text = weather.tempMaxArr[4] + "º"
         fifthDayLow.text = weather.tempMinArr[5] + "º"
         fifthDayHigh.text = weather.tempMaxArr[5] + "º"
+        if weather.getImageNumber(weather.todayIcon) == 9 {
+            addSnowflakes("mySnowflake.png", image2: "snowflakeWhite2.png")
+        } else if weather.getImageNumber(weather.todayIcon) == 3 {
+            addRain("raindrop.png")
+        } else {
+            for view in animationView.subviews {
+                view.removeFromSuperview()
+            }
+        }
     }
     
     func waitForDownload() {
@@ -458,4 +480,86 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate 
         loading = false
     }
     
+    
+    //-----------------------------------------------------------------------------------------
+    
+    
+    func addSnowflakes(image1: String, image2: String) {
+        
+        let height = animationView.frame.height
+        
+        for _ in 0...25 {
+            
+            let square = UIImageView()
+            let snowflake = UIImageView()
+            
+            let randomOffset = CGFloat(arc4random_uniform(350))
+            let controlPointx = CGFloat(arc4random_uniform(414))
+            
+            if plusOrMinus == 1 {
+                plusOrMinus = -1
+            } else {
+                plusOrMinus = 1
+            }
+            
+            let path = UIBezierPath()
+            path.moveToPoint(CGPoint(x: 0 + randomOffset, y: 0))
+            path.addCurveToPoint(CGPoint(x: 0 + randomOffset, y: height), controlPoint1: CGPoint(x: (plusOrMinus * controlPointx), y: height / 2), controlPoint2: CGPoint(x: (controlPointx + randomOffset), y: height / 2))
+            
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            
+            anim.path = path.CGPath
+            
+            anim.rotationMode = kCAAnimationRotateAuto
+            anim.repeatCount = Float.infinity
+            anim.duration = Double(arc4random_uniform(40) + 30) / 10
+            anim.timeOffset = Double(arc4random_uniform(290))
+            
+            let randomImage = arc4random_uniform(2)
+            
+            if randomImage == 0 {
+                square.image = UIImage(named: image1)
+                square.alpha = 0.6
+                square.frame = CGRect(x: -50, y: 300, width: 20, height: 20)
+                animationView.addSubview(square)
+                square.layer.addAnimation(anim, forKey: "animate position along path")
+            } else {
+                snowflake.image = UIImage(named: image2)
+                snowflake.alpha = 0.6
+                snowflake.frame = CGRect(x: -50, y: 300, width: 20, height: 20)
+                animationView.addSubview(snowflake)
+                snowflake.layer.addAnimation(anim, forKey: "animate position along path")
+            }
+        }
+    }
+    
+    func addRain(image: String) {
+        
+        let height = animationView.frame.height
+        
+        for _ in 0...20 {
+            
+            let randomPoint = CGFloat(arc4random_uniform(415))
+            
+            let path = UIBezierPath()
+            path.moveToPoint(CGPoint(x: randomPoint, y: 0))
+            path.addLineToPoint(CGPoint(x: randomPoint, y: height))
+            
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            
+            anim.path = path.CGPath
+            
+            anim.duration = Double(arc4random_uniform(5) + 25 / 10)
+            anim.timeOffset = Double(arc4random_uniform(200))
+            anim.repeatCount = Float.infinity
+            
+            let rainDrop = UIImageView()
+            rainDrop.image = UIImage(named: image)
+            rainDrop.alpha = 0.5
+            rainDrop.frame = CGRect(x: -50, y: 300, width: 10, height: 20)
+            animationView.addSubview(rainDrop)
+            rainDrop.layer.addAnimation(anim, forKey: "animate position along path")
+            
+        }
+    }
 }

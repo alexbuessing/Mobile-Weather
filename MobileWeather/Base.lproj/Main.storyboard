@@ -26,6 +26,10 @@
                                             <constraint firstAttribute="height" constant="1125" id="fgG-K0-wQ7"/>
                                         </constraints>
                                     </imageView>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gy8-L6-Y1D">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="1075"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hourly:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uih-oD-H8L">
                                         <rect key="frame" x="8" y="442" width="120" height="25"/>
                                         <constraints>
@@ -722,6 +726,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="m7u-1f-eWY" firstAttribute="top" secondItem="ZBh-nk-VPk" secondAttribute="bottom" constant="1" id="2EE-XR-RfG"/>
+                                    <constraint firstItem="gy8-L6-Y1D" firstAttribute="leading" secondItem="YJf-oU-8el" secondAttribute="leading" id="2Ee-or-x8L"/>
                                     <constraint firstItem="8UF-rl-pcL" firstAttribute="top" secondItem="YJf-oU-8el" secondAttribute="top" constant="-50" id="3yR-qY-Roc"/>
                                     <constraint firstAttribute="trailing" secondItem="HQt-Ll-a93" secondAttribute="trailing" id="3zE-af-uU3"/>
                                     <constraint firstItem="f5N-eE-zWe" firstAttribute="top" secondItem="HQt-Ll-a93" secondAttribute="bottom" constant="1" id="53Q-j0-ESz"/>
@@ -732,10 +737,13 @@
                                     <constraint firstItem="4BN-p9-vNt" firstAttribute="top" secondItem="6fR-4e-Joc" secondAttribute="bottom" constant="6" id="EAr-oV-nYO"/>
                                     <constraint firstItem="m7u-1f-eWY" firstAttribute="leading" secondItem="YJf-oU-8el" secondAttribute="leading" constant="8" id="EBm-Qk-wKC"/>
                                     <constraint firstItem="6fR-4e-Joc" firstAttribute="leading" secondItem="YJf-oU-8el" secondAttribute="leading" id="ETt-VN-5Z8"/>
+                                    <constraint firstAttribute="trailing" secondItem="gy8-L6-Y1D" secondAttribute="trailing" id="Hc1-Gp-FQg"/>
                                     <constraint firstItem="HQt-Ll-a93" firstAttribute="leading" secondItem="YJf-oU-8el" secondAttribute="leading" id="IXW-no-Ae3"/>
                                     <constraint firstItem="GXk-fw-bRA" firstAttribute="top" secondItem="UBU-in-28r" secondAttribute="bottom" id="MW6-Zv-9Jf"/>
                                     <constraint firstItem="f5N-eE-zWe" firstAttribute="trailing" secondItem="8UF-rl-pcL" secondAttribute="trailing" id="OuZ-eq-rDV"/>
                                     <constraint firstAttribute="trailing" secondItem="6fR-4e-Joc" secondAttribute="trailing" id="RVK-dC-dYz"/>
+                                    <constraint firstItem="gy8-L6-Y1D" firstAttribute="top" secondItem="YJf-oU-8el" secondAttribute="top" id="SUv-qt-Edm"/>
+                                    <constraint firstAttribute="bottom" secondItem="gy8-L6-Y1D" secondAttribute="bottom" id="VOz-D8-sEB"/>
                                     <constraint firstItem="4BN-p9-vNt" firstAttribute="leading" secondItem="YJf-oU-8el" secondAttribute="leading" constant="8" id="Wej-Zf-07a"/>
                                     <constraint firstItem="m7u-1f-eWY" firstAttribute="leading" secondItem="YJf-oU-8el" secondAttribute="leading" constant="8" id="YLL-hh-dRu"/>
                                     <constraint firstItem="m7u-1f-eWY" firstAttribute="top" secondItem="ZBh-nk-VPk" secondAttribute="bottom" constant="1" id="a0B-wW-CCf"/>
@@ -888,6 +896,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1075"/>
                     <connections>
+                        <outlet property="animationView" destination="gy8-L6-Y1D" id="eVE-xx-BhO"/>
                         <outlet property="backgroundScroll" destination="YJf-oU-8el" id="Abl-49-ooR"/>
                         <outlet property="bgImage" destination="8UF-rl-pcL" id="uhe-Dm-Dln"/>
                         <outlet property="containerView" destination="GXk-fw-bRA" id="X5r-a9-gJv"/>

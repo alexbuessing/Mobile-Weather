@@ -85,6 +85,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     let LBL_HEIGHT: CGFloat = 20
     var plusOrMinus: CGFloat = 1
     let notification = NSNotificationCenter.defaultCenter()
+    var animationOn = false
     
     //-----------------------------------------------------------------------------------------
     
@@ -114,6 +115,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     override func viewWillAppear(animated: Bool) {
         notification.addObserver(self, selector: "waitForDownload", name: UIApplicationDidBecomeActiveNotification, object: nil)
         notification.addObserver(self, selector: "startTime", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        animationOn = false
         startTime()
         waitForDownload()
     }
@@ -223,15 +225,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         fourthDayHigh.text = weather.tempMaxArr[4] + "º"
         fifthDayLow.text = weather.tempMinArr[5] + "º"
         fifthDayHigh.text = weather.tempMaxArr[5] + "º"
-        if weather.getImageNumber(weather.todayIcon) == 9 {
-            addSnowflakes("mySnowflake.png", image2: "snowflakeWhite2.png")
-        } else if weather.getImageNumber(weather.todayIcon) == 3 {
-            addRain("raindrop.png")
-        } else {
-            for view in animationView.subviews {
-                view.removeFromSuperview()
-            }
-        }
+        checkAnimation()
     }
     
     func waitForDownload() {
@@ -340,7 +334,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     func startTime() {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "getDate", userInfo: nil, repeats: true)
-        
+        animationOn = false
     }
     
     func getDate() {
@@ -560,6 +554,25 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
             animationView.addSubview(rainDrop)
             rainDrop.layer.addAnimation(anim, forKey: "animate position along path")
             
+        }
+    }
+    
+    func checkAnimation() {
+        if weather.getImageNumber(weather.todayIcon) == 9 {
+            if !animationOn {
+                addSnowflakes("mySnowflake.png", image2: "snowflakeWhite2.png")
+                animationOn = true
+            }
+        } else if weather.getImageNumber(weather.todayIcon) == 3 {
+            if !animationOn {
+                addRain("raindrop.png")
+                animationOn = true
+            }
+        } else {
+            for view in animationView.subviews {
+                view.removeFromSuperview()
+            }
+            animationOn = false
         }
     }
 }

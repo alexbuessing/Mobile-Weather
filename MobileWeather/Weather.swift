@@ -43,7 +43,6 @@ class Weather {
     private var _tempMinArr: Array<String>!
     private var _tempMaxArr: Array<String>!
     
-    var timer = NSTimer()
     var dayCounter: Int = 0
     
     var tempMinArr: Array<String> {

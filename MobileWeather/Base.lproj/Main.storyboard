@@ -820,18 +820,11 @@
                                             <action selector="searchBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NeO-uh-kOh"/>
                                         </connections>
                                     </button>
-                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eKG-KQ-klE">
-                                        <rect key="frame" x="225" y="24" width="283" height="28"/>
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eKG-KQ-klE">
+                                        <rect key="frame" x="225" y="24" width="250" height="28"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="markerwhite" translatesAutoresizingMaskIntoConstraints="NO" id="mNQ-ga-Wd3">
-                                                <rect key="frame" x="0.0" y="0.0" width="23" height="28"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="23" id="FcM-wh-Bmx"/>
-                                                    <constraint firstAttribute="height" constant="28" id="zjZ-k2-2SC"/>
-                                                </constraints>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="BsC-u8-1mA">
-                                                <rect key="frame" x="33" y="0.0" width="250" height="28"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="250" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="G09-T0-D7z"/>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="Yw8-zh-thP"/>
@@ -1132,7 +1125,6 @@
         <image name="backBtnWhite" width="360" height="360"/>
         <image name="forwardBtnWhite" width="360" height="360"/>
         <image name="locationIcon" width="243" height="243"/>
-        <image name="markerwhite" width="468" height="553"/>
         <image name="refresh" width="609" height="608"/>
         <image name="search" width="200" height="200"/>
         <image name="sunbg" width="570" height="674"/>

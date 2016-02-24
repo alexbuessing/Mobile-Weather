@@ -25,7 +25,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     @IBOutlet var todayHigh: UILabel!
     @IBOutlet var humidity: UILabel!
     @IBOutlet var windSpeed: UILabel!
-    @IBOutlet var locationStack: UIStackView!
     @IBOutlet var containerView: UIView!
     @IBOutlet var currentTemp: UILabel!
     @IBOutlet var bgImage: UIImageView!
@@ -117,7 +116,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         notification.addObserver(self, selector: "startTime", name: UIApplicationDidBecomeActiveNotification, object: nil)
         animationOn = false
         startTime()
-        waitForDownload()
+        //waitForDownload()
     }
     
     
@@ -371,7 +370,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     func showHide(showHide: Bool) {
         
         self.summaryLabel.hidden = showHide
-        self.locationStack.hidden = showHide
+        self.location.hidden = showHide
         self.mainImg.hidden = showHide
         self.currentTemp.hidden = showHide
         self.timeDay.hidden = showHide

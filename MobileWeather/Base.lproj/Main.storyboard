@@ -820,41 +820,31 @@
                                             <action selector="searchBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NeO-uh-kOh"/>
                                         </connections>
                                     </button>
-                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eKG-KQ-klE">
-                                        <rect key="frame" x="225" y="24" width="250" height="28"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="BsC-u8-1mA">
-                                                <rect key="frame" x="0.0" y="0.0" width="250" height="28"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="28" id="G09-T0-D7z"/>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="Yw8-zh-thP"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                <size key="shadowOffset" width="1" height="1"/>
-                                            </label>
-                                        </subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="BsC-u8-1mA">
+                                        <rect key="frame" x="73" y="24" width="454" height="28"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="plF-dE-TIE"/>
+                                            <constraint firstAttribute="height" constant="28" id="G09-T0-D7z"/>
                                         </constraints>
-                                    </stackView>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="h88-Vw-Wg9" firstAttribute="centerY" secondItem="BsC-u8-1mA" secondAttribute="centerY" id="3Qk-PL-Xvp"/>
                                     <constraint firstAttribute="trailing" secondItem="h88-Vw-Wg9" secondAttribute="trailing" constant="8" id="4OW-bQ-ddw"/>
-                                    <constraint firstItem="eKG-KQ-klE" firstAttribute="centerY" secondItem="h88-Vw-Wg9" secondAttribute="centerY" id="4dp-iq-ZXg"/>
-                                    <constraint firstItem="eKG-KQ-klE" firstAttribute="centerX" secondItem="xt4-Lp-uMi" secondAttribute="centerX" id="55p-I8-OaA"/>
                                     <constraint firstAttribute="trailing" secondItem="P3k-8S-Y2W" secondAttribute="trailing" constant="8" id="89A-Kw-vSP"/>
                                     <constraint firstItem="h88-Vw-Wg9" firstAttribute="leading" secondItem="xt4-Lp-uMi" secondAttribute="leading" constant="8" id="9hJ-jr-8Mp"/>
                                     <constraint firstItem="djk-OD-UFh" firstAttribute="leading" secondItem="P3k-8S-Y2W" secondAttribute="trailing" constant="3" id="L9e-xW-4bz"/>
-                                    <constraint firstItem="eKG-KQ-klE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="djk-OD-UFh" secondAttribute="trailing" constant="10" id="QmV-Np-zHG"/>
                                     <constraint firstItem="djk-OD-UFh" firstAttribute="centerY" secondItem="P3k-8S-Y2W" secondAttribute="centerY" id="RQG-3T-hhf"/>
-                                    <constraint firstItem="P3k-8S-Y2W" firstAttribute="centerY" secondItem="eKG-KQ-klE" secondAttribute="centerY" id="VzJ-gj-5fk"/>
-                                    <constraint firstItem="h88-Vw-Wg9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eKG-KQ-klE" secondAttribute="trailing" constant="10" id="gfR-aF-Fgu"/>
+                                    <constraint firstItem="h88-Vw-Wg9" firstAttribute="leading" secondItem="BsC-u8-1mA" secondAttribute="trailing" constant="39" id="b7C-I3-Ge9"/>
+                                    <constraint firstItem="BsC-u8-1mA" firstAttribute="centerY" secondItem="djk-OD-UFh" secondAttribute="centerY" id="bsg-Mm-iHb"/>
                                     <constraint firstAttribute="height" constant="60" id="lw8-Tp-8EP"/>
-                                    <constraint firstAttribute="bottom" secondItem="eKG-KQ-klE" secondAttribute="bottom" constant="8" id="tUG-Us-wSK"/>
+                                    <constraint firstAttribute="bottom" secondItem="P3k-8S-Y2W" secondAttribute="bottom" constant="10" id="mJ3-8f-WSM"/>
+                                    <constraint firstItem="BsC-u8-1mA" firstAttribute="leading" secondItem="djk-OD-UFh" secondAttribute="trailing" constant="10" id="s2x-G6-fUh"/>
                                     <constraint firstItem="P3k-8S-Y2W" firstAttribute="leading" secondItem="xt4-Lp-uMi" secondAttribute="leading" constant="8" id="zPE-hh-sLd"/>
                                 </constraints>
                                 <variation key="default">
@@ -915,7 +905,6 @@
                         <outlet property="humidity" destination="gzR-Sc-W2b" id="sSM-RC-DJN"/>
                         <outlet property="location" destination="BsC-u8-1mA" id="jDd-nO-E5L"/>
                         <outlet property="locationButton" destination="djk-OD-UFh" id="n9U-ZT-jrh"/>
-                        <outlet property="locationStack" destination="eKG-KQ-klE" id="azH-Pm-aZN"/>
                         <outlet property="mainImg" destination="G8b-zH-jEE" id="61U-S9-Z7L"/>
                         <outlet property="mainImgView" destination="nqG-lt-H6p" id="eIs-Fh-ek2"/>
                         <outlet property="refreshBtn" destination="P3k-8S-Y2W" id="L61-Yp-CaA"/>

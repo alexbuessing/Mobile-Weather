@@ -561,7 +561,8 @@ class Weather {
                     }
                     
                     if let humid = current["humidity"] as? Double {
-                        self._humidity = NSString(format: "%0.f", humid) as String
+                        let hum = humid * 100
+                        self._humidity = NSString(format: "%0.f", hum) as String
                     }
                     
                     if let winds = current["windSpeed"] as? Double {

@@ -36,6 +36,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     @IBOutlet var headerView: HeaderDetailView!
     @IBOutlet var refreshBtn: UIButton!
 
+    @IBOutlet var mySwitch: UISwitch!
+    @IBOutlet var farenheitLbl: UILabel!
+    @IBOutlet var celsiusLbl: UILabel!
     
     @IBOutlet var animationView: UIView!
     @IBOutlet var summaryLabel: UILabel!
@@ -85,6 +88,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     var plusOrMinus: CGFloat = 1
     let notification = NSNotificationCenter.defaultCenter()
     var animationOn = false
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     //-----------------------------------------------------------------------------------------
     
@@ -92,9 +96,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     //Loading views
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        //notification.addObserver(self, selector: "waitForDownload", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        mySwitch.transform = CGAffineTransformMakeScale(0.75, 0.75)
         
         
         if userLocation.useSearchLocation == true {
@@ -117,6 +120,15 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         animationOn = false
         startTime()
         //waitForDownload()
+        if mySwitch.on {
+            print("On")
+        } else {
+            print("Off")
+        }
+        
+        if let tempType = defaults.objectForKey("tempType") as? Bool {
+            mySwitch.on = tempType
+        }
     }
     
     
@@ -126,6 +138,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     
     
     //-----------------------------------------------------------------------------------------
+    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -195,9 +208,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         
         weather.getImage(weather.todayIcon)
         bgImage.image = weather.bgImg
-        currentTemp.text = "\(weather.currentTemp)º"
-        todayLow.text = "\(weather.tempMinArr[0])º"
-        todayHigh.text = "\(weather.tempMaxArr[0])º"
         humidity.text = "\(weather.humidity)%"
         windSpeed.text = "\(weather.windSpeed)MPH"
         mainImg.image = UIImage(named: "\(weather.getImageNumber(weather.todayIcon))")
@@ -214,16 +224,17 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         thirdDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[2]))")
         fourthDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[3]))")
         fifthDayImg.image = UIImage(named: "\(weather.getImageNumber(weather.forecastIconArray[4]))")
-        firstDayLow.text = weather.tempMinArr[1] + "º"
-        firstDayHigh.text = weather.tempMaxArr[1] + "º"
-        secondDayLow.text = weather.tempMinArr[2] + "º"
-        secondDayHigh.text = weather.tempMaxArr[2] + "º"
-        thirdDayLow.text = weather.tempMinArr[3] + "º"
-        thirdDayHigh.text = weather.tempMaxArr[3] + "º"
-        fourthDayLow.text = weather.tempMinArr[4] + "º"
-        fourthDayHigh.text = weather.tempMaxArr[4] + "º"
-        fifthDayLow.text = weather.tempMinArr[5] + "º"
-        fifthDayHigh.text = weather.tempMaxArr[5] + "º"
+        if mySwitch.on {
+            celsiusLbl.alpha = 1.0
+            farenheitLbl.alpha = 0.5
+            celsius()
+            updateScrollView()
+        } else {
+            celsiusLbl.alpha = 0.5
+            farenheitLbl.alpha = 1.0
+            farenheit()
+            updateScrollView()
+        }
         checkAnimation()
     }
     
@@ -311,14 +322,31 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     
     //-----------------------------------------------------------------------------------------
     
+    @IBAction func switchPressed(sender: AnyObject) {
+        
+        defaults.setObject(mySwitch.on, forKey: "tempType")
+        
+        if mySwitch.on {
+            celsiusLbl.alpha = 1.0
+            farenheitLbl.alpha = 0.5
+            celsius()
+            updateScrollView()
+        } else {
+            celsiusLbl.alpha = 0.5
+            farenheitLbl.alpha = 1.0
+            farenheit()
+            updateScrollView()
+        }
+        
+    }
     
     //Flips the main image view with the details view
     @IBAction func mainImgTap(gesture: UIGestureRecognizer) {
         
         if (isMainImgShowing) {
-            UIView.transitionFromView(mainImgView, toView: detailsView, duration: 1.0, options: [UIViewAnimationOptions.TransitionFlipFromRight, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
+            UIView.transitionFromView(mainImgView, toView: detailsView, duration: 0.8, options: [UIViewAnimationOptions.TransitionFlipFromRight, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
         } else {
-            UIView.transitionFromView(detailsView, toView: mainImgView, duration: 1.0, options: [UIViewAnimationOptions.TransitionFlipFromLeft, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
+            UIView.transitionFromView(detailsView, toView: mainImgView, duration: 0.8, options: [UIViewAnimationOptions.TransitionFlipFromLeft, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
         }
         
         isMainImgShowing = !isMainImgShowing
@@ -408,7 +436,12 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
             hourLbl.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
             
             let tempLbl = UILabel()
-            tempLbl.text = "\(self.weather.temperatureArray[x - 1])º"
+            if mySwitch.on {
+                tempLbl.text = toCelsius(self.weather.temperatureArray[x - 1])
+            } else {
+                tempLbl.text = "\(self.weather.temperatureArray[x - 1])" + "º"
+            }
+            
             tempLbl.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
             
             scrollView.addSubview(hourLbl)
@@ -574,4 +607,51 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
             animationOn = false
         }
     }
+    
+    func toCelsius(farenheit: String) -> String {
+        var celcius:Double = 0
+        
+        if let temp = Double(farenheit) {
+            celcius = (temp - 32) * (5 / 9)
+        }
+        
+        return NSString(format: "%.0f", celcius) as String + "º"
+    }
+    
+    func celsius() {
+        
+        currentTemp.text = toCelsius(weather.currentTemp)
+        todayLow.text = toCelsius(weather.tempMinArr[0])
+        todayHigh.text = toCelsius(weather.tempMaxArr[0])
+        firstDayLow.text = toCelsius(weather.tempMinArr[1])
+        firstDayHigh.text = toCelsius(weather.tempMaxArr[1])
+        secondDayLow.text = toCelsius(weather.tempMinArr[2])
+        secondDayHigh.text = toCelsius(weather.tempMaxArr[2])
+        thirdDayLow.text = toCelsius(weather.tempMinArr[3])
+        thirdDayHigh.text = toCelsius(weather.tempMaxArr[3])
+        fourthDayLow.text = toCelsius(weather.tempMinArr[4])
+        fourthDayHigh.text = toCelsius(weather.tempMaxArr[4])
+        fifthDayLow.text = toCelsius(weather.tempMinArr[5])
+        fifthDayHigh.text = toCelsius(weather.tempMaxArr[5])
+        
+    }
+    
+    func farenheit() {
+        
+        currentTemp.text = "\(weather.currentTemp)º"
+        todayLow.text = "\(weather.tempMinArr[0])º"
+        todayHigh.text = "\(weather.tempMaxArr[0])º"
+        firstDayLow.text = weather.tempMinArr[1] + "º"
+        firstDayHigh.text = weather.tempMaxArr[1] + "º"
+        secondDayLow.text = weather.tempMinArr[2] + "º"
+        secondDayHigh.text = weather.tempMaxArr[2] + "º"
+        thirdDayLow.text = weather.tempMinArr[3] + "º"
+        thirdDayHigh.text = weather.tempMaxArr[3] + "º"
+        fourthDayLow.text = weather.tempMinArr[4] + "º"
+        fourthDayHigh.text = weather.tempMaxArr[4] + "º"
+        fifthDayLow.text = weather.tempMinArr[5] + "º"
+        fifthDayHigh.text = weather.tempMaxArr[5] + "º"
+        
+    }
+    
 }

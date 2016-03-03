@@ -89,6 +89,8 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
     let notification = NSNotificationCenter.defaultCenter()
     var animationOn = false
     let defaults = NSUserDefaults.standardUserDefaults()
+    let launch = NSUserDefaults.standardUserDefaults().boolForKey("Launch")
+    
     
     //-----------------------------------------------------------------------------------------
     
@@ -98,7 +100,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         super.viewDidLoad()
         
         mySwitch.transform = CGAffineTransformMakeScale(0.75, 0.75)
-        
         
         if userLocation.useSearchLocation == true {
             locationButton.alpha = 0.5
@@ -111,23 +112,22 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         locationManager.requestWhenInUseAuthorization()
         if checkAuthStatus() {
             locationManager.startUpdatingLocation()
+
         }
     }
 
     override func viewWillAppear(animated: Bool) {
-        notification.addObserver(self, selector: "waitForDownload", name: UIApplicationDidBecomeActiveNotification, object: nil)
-        notification.addObserver(self, selector: "startTime", name: UIApplicationDidBecomeActiveNotification, object: nil)
-        animationOn = false
-        startTime()
-        //waitForDownload()
-        if mySwitch.on {
-            print("On")
-        } else {
-            print("Off")
-        }
+        if launch {
+            notification.addObserver(self, selector: "waitForDownload", name: UIApplicationDidBecomeActiveNotification, object: nil)
+            notification.addObserver(self, selector: "startTime", name: UIApplicationDidBecomeActiveNotification, object: nil)
+            animationOn = false
+            startTime()
         
         if let tempType = defaults.objectForKey("tempType") as? Bool {
             mySwitch.on = tempType
+        }
+        } else {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "Launch")
         }
     }
     
@@ -264,7 +264,6 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         } else {
             notification("Internet Connection Lost!", message: "You are currently not connected to the internet.")
         }
-        
     }
     
     func changeURL(base: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -321,6 +320,7 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
 
     
     //-----------------------------------------------------------------------------------------
+    
     
     @IBAction func switchPressed(sender: AnyObject) {
         
@@ -413,6 +413,9 @@ class MainVC: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate,
         self.viewBreak3.hidden = showHide
         self.hourlyLbl.hidden = showHide
         self.forecastLbl.hidden = showHide
+        self.mySwitch.hidden = showHide
+        self.farenheitLbl.hidden = showHide
+        self.celsiusLbl.hidden = showHide
     }
     
     
